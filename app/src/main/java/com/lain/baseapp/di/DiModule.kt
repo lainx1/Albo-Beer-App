@@ -1,5 +1,6 @@
 package com.lain.baseapp.di
 
+import com.lain.baseapp.data.repository.ModelRepository
 import com.lain.baseapp.network.BASE_URL
 import com.lain.baseapp.network.BaseApi
 import com.lain.baseapp.network.converters.EitherCallAdapterFactory
@@ -53,6 +54,6 @@ object DiModule {
      * @return BaseViewModel: instance
      */
     @Provides
-    fun provideBaseViewModel(baseBaseRepository: BaseRepository): BaseViewModel = BaseViewModel(baseRepository = baseBaseRepository)
+    fun provideBaseViewModel(baseBaseRepository: BaseRepository, modelRepository: ModelRepository): BaseViewModel = BaseViewModel(baseRepository = baseBaseRepository, modelRepository = modelRepository)
 
 }

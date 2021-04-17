@@ -1,5 +1,6 @@
-package com.lain.baseapp.network.model.`interface`
+package com.lain.baseapp.utils.errors
 
+import com.lain.baseapp.data.DatabaseError
 import com.lain.baseapp.network.model.HttpErrorResponse
 
 /**
@@ -25,4 +26,10 @@ interface HandleErrors {
      * @param throwable: a kotlin error to handle.
      */
     fun unknownApiError(throwable: Throwable)
+
+    /**
+     * Handle database error.
+     * @param databaseError: a database error to handle.
+     */
+    fun onDatabaseError(databaseError: DatabaseError)
 }

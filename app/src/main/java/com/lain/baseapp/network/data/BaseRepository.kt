@@ -17,7 +17,6 @@ class BaseRepository @Inject constructor(private val baseApi: BaseApi){
      * @param name: any name.
      * @return Either: the api response
      */
-    suspend fun requestGet(name: String): Either<ApiError, Model>{
-        return baseApi.requestGet(name = name)
-    }
+    suspend fun requestGet(name: String): Either<ApiError, Model> = baseApi.requestGet(name = name)
+
 }

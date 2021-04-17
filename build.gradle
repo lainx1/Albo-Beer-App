@@ -3,10 +3,10 @@ buildscript {
     ext {
         kotlin_version = "1.4.21"
         retrofit = "2.8.2"
-        version_kotlin_coroutines = "1.1.0"
+        version_kotlin_coroutines = "1.4.1"
         version_retrofit_coroutines_adapter = "0.9.2"
         version_moshi = "1.8.0"
-        glide = "4.11.0"
+        glide = "4.12.0"
         arrow_version = "0.11.0"
         timber_version="4.7.1"
         lottieVersion = "3.4.0"
@@ -14,6 +14,8 @@ buildscript {
         material = "1.2.1"
         swipeRefresh = "1.1.0"
         dokka_version = "1.4.20"
+        hilt_version = "2.28-alpha"
+        room_version = "2.2.6"
     }
     repositories {
         google()

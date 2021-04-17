@@ -4,7 +4,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.lain.baseapp.network.model.*
-import com.lain.baseapp.network.model.`interface`.HandleErrors
+import com.lain.baseapp.utils.errors.HandleErrors
 import com.lain.baseapp.view.Router
 import com.squareup.moshi.Moshi
 

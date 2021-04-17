@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lain.baseapp.data.repository.ModelRepository
 import com.lain.baseapp.model.Model
 import com.lain.baseapp.network.data.BaseRepository
 import com.lain.baseapp.network.model.ApiError
@@ -17,7 +18,10 @@ import javax.inject.Inject
  *
  * @param baseRepository: Example repository.
  */
-class BaseViewModel @Inject constructor(private val baseRepository: BaseRepository): ViewModel(){
+class BaseViewModel @Inject constructor(
+        private val baseRepository: BaseRepository,
+        private val modelRepository: ModelRepository
+        ): ViewModel(){
 
     /**
      * A live data error.
