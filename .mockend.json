@@ -4,7 +4,8 @@
       "views": "int",
       "count": "int",
       "published": "boolean",
-      "createdAt": "date"
+      "createdAt": "date",
+      "name": "string"
     }
   }
   
