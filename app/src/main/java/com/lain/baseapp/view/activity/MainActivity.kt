@@ -39,6 +39,6 @@ class MainActivity : BaseActivity() {
             //TODO do something
         }
 
-        baseViewModel.requestGet(name = "ditto")
+        baseViewModel.requestGet(number = 1)
     }
 }

@@ -55,13 +55,13 @@ class BaseViewModel @Inject constructor(
 
     /**
      * Send a functional get request example.
-     * @param name: a sample name.
+     * @param number: a sample name.
      */
-    fun requestGet(name: String){
+    fun requestGet(number: Int){
         _loading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
-            val either = baseRepository.requestGet(name = name)
+            val either = baseRepository.requestGet(number = number)
 
             withContext(Dispatchers.Main){
                 _loading.value = false

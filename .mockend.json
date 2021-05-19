@@ -2,6 +2,7 @@
     "Post": {
       "title": "string",
       "views": "int",
+      "count": "int",
       "published": "boolean",
       "createdAt": "date"
     }

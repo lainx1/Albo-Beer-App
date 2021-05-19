@@ -14,9 +14,9 @@ class BaseRepository @Inject constructor(private val baseApi: BaseApi){
 
     /**
      * Send a functional sample to an api.
-     * @param name: any name.
+     * @param number: any name.
      * @return Either: the api response
      */
-    suspend fun requestGet(name: String): Either<ApiError, Model> = baseApi.requestGet(name = name)
+    suspend fun requestGet(number: Int): Either<ApiError, Model> = baseApi.requestGet(number = number)
 
 }
