@@ -1,11 +1,7 @@
 {
-    "Post": {
-      "title": "string",
-      "views": "int",
-      "count": "int",
-      "published": "boolean",
-      "createdAt": "date",
-      "name": "string"
+    "Pokemon": {
+      "name": "string",
+      "number": "int"
     }
   }
   
