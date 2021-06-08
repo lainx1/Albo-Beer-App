@@ -1,16 +1,13 @@
 {
-  "User": {
-    "id": "int",
-    "nick_name": "string",
-    "email": "string",
-    "person": "Person[]"
+  "Post": {
+    "title": "string",
+    "views": "int",
+    "published": "boolean",
+    "createdAt": "date",
+    "comments": "Comment[]"
   },
-  "Person": {
-    "id": "int",
-    "fullName": "string",
-    "age": "int",
-    "birthDate": "date",
-    "user": "User"
+  "Comment": {
+    "body": "string",
+    "post": "Post"
   }
 }
-  
