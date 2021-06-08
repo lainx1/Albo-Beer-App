@@ -1,13 +1,14 @@
 {
-  "Post": {
-    "title": "string",
-    "views": "int",
-    "published": "boolean",
-    "createdAt": "date",
-    "comments": "Comment[]"
+  "User": {
+    "id": "int",
+    "nick_name": "string",
+    "email": "string",
+    "person": "Person"
   },
-  "Comment": {
-    "body": "string",
-    "post": "Post"
+  "Person": {
+    "id": "int",
+    "fullName": "string",
+    "age": "int",
+    "birthDate": "date"
   }
 }
