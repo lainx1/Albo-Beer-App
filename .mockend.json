@@ -3,13 +3,14 @@
     "id": "int",
     "nick_name": "string",
     "email": "string",
-    "person": "Person"
+    "person": "Person[]"
   },
   "Person": {
     "id": "int",
     "fullName": "string",
     "age": "int",
-    "birthDate": "date"
+    "birthDate": "date",
+    "user": "User"
   }
 }
   
