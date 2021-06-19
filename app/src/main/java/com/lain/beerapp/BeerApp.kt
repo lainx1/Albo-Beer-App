@@ -7,4 +7,4 @@ import dagger.hilt.android.HiltAndroidApp
  * This class is the application.
  */
 @HiltAndroidApp
-class BaseApp: Application()
+class BeerApp: Application()
