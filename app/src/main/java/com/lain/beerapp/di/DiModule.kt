@@ -1,11 +1,11 @@
 package com.lain.beerapp.di
 
-import com.lain.beerapp.dao.repository.BeerRepository
-import com.lain.beerapp.dao.repository.impl.BeerRepositoryImpl
+import com.lain.beerapp.network.repository.BeerRepository
+import com.lain.beerapp.network.repository.impl.BeerRepositoryImpl
 import com.lain.beerapp.data.repository.ModelRepository
-import com.lain.beerapp.network.BASE_URL
-import com.lain.beerapp.network.PunkApi
 import com.lain.beerapp.network.converters.EitherCallAdapterFactory
+import com.lain.beerapp.network.source.BASE_URL
+import com.lain.beerapp.network.source.PunkApi
 import com.lain.beerapp.viewmodel.BeerViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

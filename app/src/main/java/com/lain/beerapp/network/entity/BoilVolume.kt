@@ -1,4 +1,4 @@
-package com.lain.beerapp.dao.entity
+package com.lain.beerapp.network.entity
 
 data class BoilVolume(
     val unit: String?,

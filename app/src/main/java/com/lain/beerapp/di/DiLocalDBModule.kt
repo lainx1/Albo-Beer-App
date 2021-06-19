@@ -2,8 +2,8 @@ package com.lain.beerapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lain.beerapp.data.DatabaseRoom
-import com.lain.beerapp.data.dao.ModelDao
+import com.lain.beerapp.data.source.DatabaseRoom
+import com.lain.beerapp.data.dao.BeerDAO
 import com.lain.beerapp.data.repository.ModelRepository
 import dagger.Module
 import dagger.Provides
@@ -26,13 +26,13 @@ object DiLocalDBModule {
 
     @Provides
     @Singleton
-    fun provideModelDao(databaseRoom: DatabaseRoom) : ModelDao = databaseRoom.modelDao()
+    fun provideModelDao(databaseRoom: DatabaseRoom) : BeerDAO = databaseRoom.beerDAO()
 
     /**
      * Provides local repository
-     * @param modelDao: model dao.
+     * @param beerDAO: model dao.
      * @return model repository.
      */
     @Provides
-    fun provideModelRepository(modelDao: ModelDao) : ModelRepository = ModelRepository(modelDao = modelDao)
+    fun provideModelRepository(beerDAO: BeerDAO) : ModelRepository = ModelRepository(beerDAO = beerDAO)
 }

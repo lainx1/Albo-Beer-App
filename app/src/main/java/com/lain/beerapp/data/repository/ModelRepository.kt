@@ -1,26 +1,26 @@
 package com.lain.beerapp.data.repository
 
 import androidx.annotation.WorkerThread
-import com.lain.beerapp.data.dao.ModelDao
-import com.lain.beerapp.model.Model
+import com.lain.beerapp.data.dao.BeerDAO
+import com.lain.beerapp.data.entity.Beer
 import javax.inject.Inject
 
 
-class ModelRepository @Inject constructor(private val modelDao: ModelDao) {
+class ModelRepository @Inject constructor(private val beerDAO: BeerDAO) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun findAll(): List<Model> = modelDao.findAll()
+    suspend fun findAll(): List<Beer> = beerDAO.findAll()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(model: Model) : Long = modelDao.insert(model = model)
+    suspend fun insert(beer: Beer) : Long = beerDAO.insert(beer = beer)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun update(model: Model) = modelDao.update(model = model)
+    suspend fun update(beer: Beer) = beerDAO.update(beer = beer)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun delete(model: Model) = modelDao.delete(model = model)
+    suspend fun delete(beer: Beer) = beerDAO.delete(beer = beer)
 }

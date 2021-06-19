@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lain.beerapp.dao.entity.Beer
-import com.lain.beerapp.dao.repository.BeerRepository
+import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.network.repository.BeerRepository
 import com.lain.beerapp.data.repository.ModelRepository
 import com.lain.beerapp.network.model.ApiError
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +19,8 @@ import javax.inject.Inject
  * @param beerRepository: Example repository.
  */
 class BeerViewModel @Inject constructor(
-        private val beerRepository: BeerRepository,
-        private val modelRepository: ModelRepository
+    private val beerRepository: BeerRepository,
+    private val modelRepository: ModelRepository
         ): ViewModel(){
 
     /**
@@ -36,7 +36,7 @@ class BeerViewModel @Inject constructor(
     /**
      * The response live data.
      */
-    private val _beers = MutableLiveData<List<Beer>>()
+    private val _beers = MutableLiveData<List<BeerDTO>>()
 
     /**
      * The entry to error.
@@ -51,7 +51,7 @@ class BeerViewModel @Inject constructor(
     /**
      * The entry to response.
      */
-    val beers: LiveData<List<Beer>> get() = _beers
+    val beers: LiveData<List<BeerDTO>> get() = _beers
 
     /**
      * Send a functional get request example.
