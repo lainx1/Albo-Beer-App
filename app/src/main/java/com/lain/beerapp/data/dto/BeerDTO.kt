@@ -33,7 +33,7 @@ data class BeerDTO(
 
         fun id(id: Int) = apply { this.id = id }
         fun name(name: String) = apply { this.name = name }
-        fun image(id: String) = apply { this.image = image }
+        fun image(image: String) = apply { this.image = image }
         fun tagLine(tagLine: String) = apply { this.tagLine = tagLine }
         fun description(description: String) = apply { this.description = description }
         fun firstBrewedDate(firstBrewedDate: String) =
