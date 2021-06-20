@@ -56,8 +56,13 @@ object DiModule {
      */
     @Provides
     fun provideBeerApiRepository(punkApi: PunkApi) : BeerApiRepository = BeerApiRepositoryImpl(punkApi = punkApi)
-    
 
+
+    /**
+     * Provide room database.
+     * @param appContext .
+     * @return [BeerDataBase].
+     */
     @Provides
     @Singleton
     fun provideBeerDatabase(@ApplicationContext appContext: Context) : BeerDataBase = Room.databaseBuilder(
@@ -66,6 +71,11 @@ object DiModule {
         "beer_app_database"
     ).build()
 
+    /**
+     * Provide beer dao.
+     * @param beerDataBase .
+     * @return [BeerDAO]
+     */
     @Provides
     @Singleton
     fun provideBeerDao(beerDataBase: BeerDataBase) : BeerDAO = beerDataBase.beerDAO()
