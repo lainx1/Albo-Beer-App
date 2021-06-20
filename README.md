@@ -1,3 +1,20 @@
 # Albo-Beer-App
 
-This app is a beer app 🍻
+This applications is a list -> details for beers 🍻🍻.
+
+    Contains
+      * Infinite Scrooll.
+      * List beer activity.
+      * Detail beer activity.
+      * Recycler view.
+      * Dependency injection (Hilt).
+      * Lottie.
+      * Splash screen.
+      * MVVM.
+      * Glide.
+      * Retrofit.
+      * Live Data.
+      * Coroutines.
+      * Constraint layout.
+      * Either.
+      * Error Handling.
