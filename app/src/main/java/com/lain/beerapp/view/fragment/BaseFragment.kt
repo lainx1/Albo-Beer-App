@@ -1,17 +1,14 @@
-package com.lain.beerapp.view.activity
+package com.lain.beerapp.view.fragment
 
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.lain.beerapp.network.model.*
 import com.lain.beerapp.utils.errors.HandleErrors
 import com.lain.beerapp.view.Router
 import com.squareup.moshi.Moshi
 
-/**
- * This class is the base activity, contains the base behavior for all activities.
- */
-abstract class BaseActivity: AppCompatActivity() {
+open class BaseFragment : Fragment() {
 
     /*==============================================================================================
     BASE METHODS
@@ -44,7 +41,7 @@ abstract class BaseActivity: AppCompatActivity() {
                 return
             }
 
-            Router.goToError(context = this, error = "Error: ${httpErrorResponse?.status}: ${httpErrorResponse?.message}")
+            Router.goToError(context = requireContext(), error = "Error: ${httpErrorResponse?.status}: ${httpErrorResponse?.message}")
 
 
         }else if(error is NetworkError){
@@ -55,7 +52,7 @@ abstract class BaseActivity: AppCompatActivity() {
             }
 
             //This is the default behavior
-            Router.goToError(context = this, error = "Error: ${error.throwable.message}")
+            Router.goToError(context = requireContext(), error = "Error: ${error.throwable.message}")
 
         }else{
 
@@ -67,7 +64,7 @@ abstract class BaseActivity: AppCompatActivity() {
             }
 
 
-            Router.goToError(context = this, error = "Error: ${error.throwable.message}")
+            Router.goToError(context = requireContext(), error = "Error: ${error.throwable.message}")
 
         }
     }

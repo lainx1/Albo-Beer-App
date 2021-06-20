@@ -17,7 +17,7 @@ data class Beer(
     @Json(name = "contributed_by")
     val contributedBy: String?,
     val description: String?,
-    val ebc: Int?,
+    val ebc: Double?,
 
     @Json(name = "first_brewed")
     val firstBrewed: String?,

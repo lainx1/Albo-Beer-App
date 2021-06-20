@@ -10,9 +10,9 @@ import java.util.stream.Collectors
 import javax.inject.Inject
 
 class BeerRepositoryImpl @Inject constructor(private val punkApi: PunkApi) : BeerRepository {
-    override suspend fun findAll(): Either<ApiError, List<BeerDTO>> {
+    override suspend fun findAll(page: Int): Either<ApiError, List<BeerDTO>> {
 
-        punkApi.findAll().fold(
+        punkApi.findAll(page = page).fold(
             ifLeft = {
                 return Either.left(it)
             },

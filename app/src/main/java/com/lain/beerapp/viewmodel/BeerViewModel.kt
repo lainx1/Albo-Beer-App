@@ -56,11 +56,11 @@ class BeerViewModel @Inject constructor(
     /**
      * Send a functional get request example.
      */
-    fun findBeers(){
+    fun findBeers(page: Int){
         _loading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
-            val either = beerRepository.findAll()
+            val either = beerRepository.findAll(page = page)
 
             withContext(Dispatchers.Main){
                 _loading.value = false

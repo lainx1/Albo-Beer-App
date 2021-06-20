@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.lain.beerapp.network.entity.Beer
 import com.lain.beerapp.network.model.ApiError
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * This class is the base api, ready to use only changing the [BASE_URL], and defining new [ENDPOINT].
@@ -18,6 +19,9 @@ interface PunkApi{
      * @return Either: the api response.
      */
     @GET(value = ENDPOINT)
-    suspend fun findAll(): Either<ApiError, List<Beer>>
+    suspend fun findAll(
+        @Query(value = "page")page : Int,
+        @Query(value = "per_page") perPage: Int? = 20
+    ): Either<ApiError, List<Beer>>
 
 }

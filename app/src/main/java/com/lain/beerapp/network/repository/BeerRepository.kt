@@ -6,6 +6,6 @@ import com.lain.beerapp.network.model.ApiError
 
 interface BeerRepository {
 
-    suspend fun findAll() : Either<ApiError, List<BeerDTO>>
+    suspend fun findAll(page : Int) : Either<ApiError, List<BeerDTO>>
 
 }
