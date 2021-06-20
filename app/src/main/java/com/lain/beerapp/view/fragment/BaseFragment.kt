@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.lain.beerapp.network.model.*
-import com.lain.beerapp.utils.errors.HandleErrors
+import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.squareup.moshi.Moshi
 

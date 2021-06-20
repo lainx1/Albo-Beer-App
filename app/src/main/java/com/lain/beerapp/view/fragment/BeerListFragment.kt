@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.R
 import com.lain.beerapp.data.source.DatabaseError
 import com.lain.beerapp.network.model.HttpErrorResponse
-import com.lain.beerapp.utils.errors.HandleErrors
+import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
@@ -77,7 +77,7 @@ class BeerListFragment : BaseFragment() {
         beerViewModel!!.error.observe(viewLifecycleOwner, {
 
             fragment!!.mainSRL.isRefreshing = false
-            handleApiError(error = it, handleErrors = object : HandleErrors{
+            handleApiError(error = it, handleErrors = object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
                     Snackbar.make(requireContext(), fragment!!.parentLayout, httpErrorResponse.message, Snackbar.LENGTH_SHORT).show()
                 }
