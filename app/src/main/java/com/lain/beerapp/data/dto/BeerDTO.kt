@@ -1,5 +1,7 @@
 package com.lain.beerapp.data.dto
 
+import java.io.Serializable
+
 /**
  * This class define a dto for beer.
  * @author Ivan Martinez Jimenez.
@@ -20,7 +22,7 @@ data class BeerDTO(
 
     val foodPairing: List<String>?
 
-) {
+) : Serializable {
     data class Builder(
         var id: Int? = null,
         var image: String? = null,

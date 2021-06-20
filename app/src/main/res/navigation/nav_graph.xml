@@ -9,5 +9,18 @@
         android:id="@+id/beerListFragment"
         android:name="com.lain.beerapp.view.fragment.BeerListFragment"
         android:label="fragment_beer_list"
-        tools:layout="@layout/fragment_beer_list" />
+        tools:layout="@layout/fragment_beer_list" >
+        <action
+            android:id="@+id/action_beerListFragment_to_beerDetailFragment"
+            app:destination="@id/beerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/beerDetailFragment"
+        android:name="com.lain.beerapp.view.fragment.BeerDetailFragment"
+        android:label="fragment_beer_detail"
+        tools:layout="@layout/fragment_beer_detail" >
+        <argument
+            android:name="beer"
+            app:argType="com.lain.beerapp.data.dto.BeerDTO" />
+    </fragment>
 </navigation>

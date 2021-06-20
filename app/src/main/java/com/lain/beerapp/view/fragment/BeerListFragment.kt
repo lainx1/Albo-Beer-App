@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lain.beerapp.R
+import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment(), NestedScrollView.OnScrollChangeListener {
 
-    var fragment : View? = null
+    var fragment: View? = null
 
     /**
      * Pagination control
@@ -34,9 +36,11 @@ class BeerListFragment : BaseFragment(), NestedScrollView.OnScrollChangeListener
      * Beer adapter
      */
     private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
-        {
-            //TODO send to detail
-        }
+
+        Router.goToBeerDetail(
+            navController = requireActivity().findNavController(R.id.nav_host_fragment),
+            beer = beer
+        )
     }
 
     override fun onCreateView(
