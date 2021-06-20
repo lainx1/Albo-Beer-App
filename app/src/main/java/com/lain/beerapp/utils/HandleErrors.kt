@@ -1,6 +1,5 @@
 package com.lain.beerapp.utils
 
-import com.lain.beerapp.data.room.source.DatabaseError
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 
 /**
@@ -27,9 +26,5 @@ interface HandleErrors {
      */
     fun unknownApiError(throwable: Throwable)
 
-    /**
-     * Handle database error.
-     * @param databaseError: a database error to handle.
-     */
-    fun onDatabaseError(databaseError: DatabaseError)
+
 }
