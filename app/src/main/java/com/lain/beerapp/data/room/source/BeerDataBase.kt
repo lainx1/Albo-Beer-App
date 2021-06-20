@@ -13,7 +13,7 @@ import com.lain.beerapp.data.room.entity.FoodPairing
  * @author Ivan Martinez Jimenez.
  */
 @Database(entities = [Beer::class, FoodPairing::class], version = 3, exportSchema = true)
-abstract class DatabaseRoom : RoomDatabase() {
+abstract class BeerDataBase : RoomDatabase() {
 
     abstract fun beerDAO(): BeerDAO
 
@@ -24,15 +24,15 @@ abstract class DatabaseRoom : RoomDatabase() {
         // same time.
 
         @Volatile
-        private var INSTANCE: DatabaseRoom? = null
+        private var INSTANCE: BeerDataBase? = null
 
         // if the INSTANCE is not null, then return it,
         // if it is, then create the database
-        fun getDatabase(context: Context): DatabaseRoom = INSTANCE ?: synchronized(this) {
+        fun getDatabase(context: Context): BeerDataBase = INSTANCE ?: synchronized(this) {
 
             val instance = Room.databaseBuilder(
                 context.applicationContext,
-                DatabaseRoom::class.java,
+                BeerDataBase::class.java,
                 "beer_app_database"
             ).build()
 
