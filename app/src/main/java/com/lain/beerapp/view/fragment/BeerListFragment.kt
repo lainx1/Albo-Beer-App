@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.R
-import com.lain.beerapp.data.source.DatabaseError
+import com.lain.beerapp.data.room.source.DatabaseError
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router

@@ -1,6 +1,6 @@
 package com.lain.beerapp.utils
 
-import com.lain.beerapp.data.source.DatabaseError
+import com.lain.beerapp.data.room.source.DatabaseError
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 
 /**

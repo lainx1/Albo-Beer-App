@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lain.beerapp.data.dto.BeerDTO
 import com.lain.beerapp.data.network.repository.BeerRepository
-import com.lain.beerapp.data.repository.ModelRepository
+import com.lain.beerapp.data.room.repository.ModelRepository
 import com.lain.beerapp.data.network.errors.ApiError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

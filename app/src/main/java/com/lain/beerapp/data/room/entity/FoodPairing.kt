@@ -1,4 +1,4 @@
-package com.lain.beerapp.data.entity
+package com.lain.beerapp.data.room.entity
 
 import androidx.room.*
 

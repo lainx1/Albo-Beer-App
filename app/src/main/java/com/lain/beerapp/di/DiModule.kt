@@ -2,7 +2,7 @@ package com.lain.beerapp.di
 
 import com.lain.beerapp.data.network.repository.BeerRepository
 import com.lain.beerapp.data.network.repository.impl.BeerRepositoryImpl
-import com.lain.beerapp.data.repository.ModelRepository
+import com.lain.beerapp.data.room.repository.ModelRepository
 import com.lain.beerapp.data.network.converters.EitherCallAdapterFactory
 import com.lain.beerapp.data.network.source.BASE_URL
 import com.lain.beerapp.data.network.source.PunkApi

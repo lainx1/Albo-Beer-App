@@ -2,9 +2,9 @@ package com.lain.beerapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lain.beerapp.data.source.DatabaseRoom
-import com.lain.beerapp.data.dao.BeerDAO
-import com.lain.beerapp.data.repository.ModelRepository
+import com.lain.beerapp.data.room.source.DatabaseRoom
+import com.lain.beerapp.data.room.dao.BeerDAO
+import com.lain.beerapp.data.room.repository.ModelRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
-package com.lain.beerapp.data.dao
+package com.lain.beerapp.data.room.dao
 
 import androidx.room.*
-import com.lain.beerapp.data.entity.Beer
+import com.lain.beerapp.data.room.entity.Beer
 
 @Dao
 interface BeerDAO {

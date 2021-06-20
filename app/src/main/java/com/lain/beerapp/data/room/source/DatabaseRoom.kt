@@ -1,12 +1,12 @@
-package com.lain.beerapp.data.source
+package com.lain.beerapp.data.room.source
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.lain.beerapp.data.dao.BeerDAO
-import com.lain.beerapp.data.entity.Beer
-import com.lain.beerapp.data.entity.FoodPairing
+import com.lain.beerapp.data.room.dao.BeerDAO
+import com.lain.beerapp.data.room.entity.Beer
+import com.lain.beerapp.data.room.entity.FoodPairing
 
 /**
  * This class contains the implemetation to create a room database.

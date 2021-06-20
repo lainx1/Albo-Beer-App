@@ -1,8 +1,8 @@
-package com.lain.beerapp.data.repository
+package com.lain.beerapp.data.room.repository
 
 import androidx.annotation.WorkerThread
-import com.lain.beerapp.data.dao.BeerDAO
-import com.lain.beerapp.data.entity.Beer
+import com.lain.beerapp.data.room.dao.BeerDAO
+import com.lain.beerapp.data.room.entity.Beer
 import javax.inject.Inject
 
 
