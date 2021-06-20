@@ -2,6 +2,7 @@ package com.lain.beerapp.data.network.errors
 
 /**
  * This class is a http error representation.
+* @author Ivan Martinez Jimenez.
  */
 data class HttpErrorResponse(
         /**

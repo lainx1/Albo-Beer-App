@@ -7,7 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * This class is the base api, ready to use only changing the [BASE_URL], and defining new [ENDPOINT].
+ * This class is the beer api.
+ * @author Ivan Martinez Jimenez.
  */
 const val BASE_URL = "https://api.punkapi.com/v2/"
 const val ENDPOINT = "beers"

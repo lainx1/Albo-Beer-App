@@ -2,6 +2,7 @@ package com.lain.beerapp.data.network.errors
 
 /**
  * This class is the base error.
+ * @author Ivan Martinez Jimenez.
  */
 sealed class ApiError
 

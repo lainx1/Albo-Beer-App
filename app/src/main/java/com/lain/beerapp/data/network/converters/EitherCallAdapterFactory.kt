@@ -22,6 +22,7 @@ import java.lang.reflect.Type
 
 /**
  * This class convert the retrofit default response to an either response.
+ * @author Ivan Martinez Jimenez.
  */
 internal class EitherCallAdapterFactory : CallAdapter.Factory() {
 

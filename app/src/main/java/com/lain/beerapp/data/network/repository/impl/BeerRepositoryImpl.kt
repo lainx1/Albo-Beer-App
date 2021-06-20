@@ -9,6 +9,10 @@ import com.lain.beerapp.data.network.errors.ApiError
 import java.util.stream.Collectors
 import javax.inject.Inject
 
+/**
+ * This class contains the implementation for beer repository.
+ * @author Ivan Martinez Jimenez.
+ */
 class BeerRepositoryImpl @Inject constructor(private val punkApi: PunkApi) : BeerRepository {
     override suspend fun findAll(page: Int): Either<ApiError, List<BeerDTO>> {
 

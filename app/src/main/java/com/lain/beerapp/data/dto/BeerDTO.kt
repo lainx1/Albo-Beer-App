@@ -4,27 +4,50 @@ import java.io.Serializable
 import kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass
 
 /**
- * This class define a dto for beer.
+ * This class define a dto to use in the app for beer.
  * @author Ivan Martinez Jimenez.
  */
 data class BeerDTO(
 
+    /**
+     * Id
+     */
     val id: Int?,
 
+    /**
+     * Name
+     */
     val name: String?,
 
+    /**
+     * Image
+     */
     val image: String?,
 
+    /**
+     * Tag line
+     */
     val tagLine: String?,
 
+    /**
+     * Description
+     */
     val description: String?,
 
+    /**
+     * First Brewed Date
+     */
     val firstBrewedDate: String?,
 
+    /**
+     * FoodPairing
+     */
     val foodPairing: List<String>?
 
 ) : Serializable {
-
+    /*==============================================================================================
+    BUILDER PATTERN
+    ==============================================================================================*/
     data class Builder(
         var id: Int? = null,
         var image: String? = null,
@@ -57,6 +80,9 @@ data class BeerDTO(
         )
     }
 
+    /*==============================================================================================
+    OVERRIDE METHODS
+    ==============================================================================================*/
     override fun equals(other: Any?): Boolean {
 
         if (javaClass != other?.javaClass)
