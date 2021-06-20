@@ -1,11 +1,13 @@
 package com.lain.beerapp.di
 
-import com.lain.beerapp.data.network.repository.BeerRepository
-import com.lain.beerapp.data.network.repository.impl.BeerRepositoryImpl
+import com.lain.beerapp.data.network.repository.BeerApiRepository
+import com.lain.beerapp.data.network.repository.impl.BeerApiRepositoryImpl
 import com.lain.beerapp.data.room.repository.ModelRepository
 import com.lain.beerapp.data.network.converters.EitherCallAdapterFactory
 import com.lain.beerapp.data.network.source.BASE_URL
 import com.lain.beerapp.data.network.source.PunkApi
+import com.lain.beerapp.data.repository.BeerRepository
+import com.lain.beerapp.data.repository.impl.BeerRepositoryImpl
 import com.lain.beerapp.viewmodel.BeerViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -42,12 +44,21 @@ object DiModule {
     }
 
     /**
-     * Provides beer repository.
+     * Provides beer api repository.
      * @param punkApi: punk api instance.
-     * @return BeerRepository: instance
+     * @return beer api repository instance
      */
     @Provides
-    fun provideBeerRepository(punkApi: PunkApi) : BeerRepository = BeerRepositoryImpl(punkApi = punkApi)
+    fun provideBeerApiRepository(punkApi: PunkApi) : BeerApiRepository = BeerApiRepositoryImpl(punkApi = punkApi)
+
+
+    /**
+     * Provides beer repository.
+     * @param beerApiRepository: beer api repository instance.
+     * @return beer repository instance
+     */
+    @Provides
+    fun provideBeerRepository(beerApiRepository: BeerApiRepository) : BeerRepository = BeerRepositoryImpl(beerApiRepository = beerApiRepository)
 
     /**
      * Provides beer view model.
@@ -55,7 +66,7 @@ object DiModule {
      * @return BeerViewModel: instance
      */
     @Provides
-    fun provideBeerViewModel(beerRepository: BeerRepository, modelRepository: ModelRepository): BeerViewModel = BeerViewModel(beerRepository = beerRepository, modelRepository = modelRepository)
+    fun provideBeerViewModel(beerRepository: BeerRepository): BeerViewModel = BeerViewModel(beerRepository = beerRepository)
 
 
 }

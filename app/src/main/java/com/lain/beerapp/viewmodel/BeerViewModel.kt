@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.data.network.repository.BeerRepository
-import com.lain.beerapp.data.room.repository.ModelRepository
 import com.lain.beerapp.data.network.errors.ApiError
+import com.lain.beerapp.data.repository.BeerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,9 +18,8 @@ import javax.inject.Inject
  * @param beerRepository: Example repository.
  */
 class BeerViewModel @Inject constructor(
-    private val beerRepository: BeerRepository,
-    private val modelRepository: ModelRepository
-        ): ViewModel(){
+    private val beerRepository: BeerRepository
+) : ViewModel() {
 
     /**
      * A live data error.
@@ -46,7 +44,7 @@ class BeerViewModel @Inject constructor(
     /**
      * The entry to loading data.
      */
-    val loading : LiveData<Boolean> get() = _loading
+    val loading: LiveData<Boolean> get() = _loading
 
     /**
      * The entry to response.
@@ -56,18 +54,18 @@ class BeerViewModel @Inject constructor(
     /**
      * Send a functional get request example.
      */
-    fun findBeers(page: Int){
+    fun findBeers(page: Int) {
         _loading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
             val either = beerRepository.findAll(page = page)
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 _loading.value = false
 
                 either.fold({
                     _error.value = it
-                },{
+                }, {
                     _beers.value = it
                 })
             }
