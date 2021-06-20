@@ -5,7 +5,7 @@ import com.lain.beerapp.data.dto.BeerDTO
 import com.lain.beerapp.network.mapper.BeerMapper
 import com.lain.beerapp.network.repository.BeerRepository
 import com.lain.beerapp.network.source.PunkApi
-import com.lain.beerapp.network.model.ApiError
+import com.lain.beerapp.network.errors.ApiError
 import java.util.stream.Collectors
 import javax.inject.Inject
 

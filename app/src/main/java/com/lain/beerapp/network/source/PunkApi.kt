@@ -2,7 +2,7 @@ package com.lain.beerapp.network.source
 
 import arrow.core.Either
 import com.lain.beerapp.network.entity.Beer
-import com.lain.beerapp.network.model.ApiError
+import com.lain.beerapp.network.errors.ApiError
 import retrofit2.http.GET
 import retrofit2.http.Query
 

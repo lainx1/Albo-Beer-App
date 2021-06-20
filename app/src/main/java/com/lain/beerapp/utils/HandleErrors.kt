@@ -1,7 +1,7 @@
 package com.lain.beerapp.utils
 
 import com.lain.beerapp.data.source.DatabaseError
-import com.lain.beerapp.network.model.HttpErrorResponse
+import com.lain.beerapp.network.errors.HttpErrorResponse
 
 /**
  * This interface handle api response errors.

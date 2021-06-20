@@ -1,4 +1,4 @@
-package com.lain.beerapp.network.model
+package com.lain.beerapp.network.errors
 
 /**
  * This class is the base error.

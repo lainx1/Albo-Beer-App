@@ -4,10 +4,10 @@ import arrow.core.Either
 import arrow.core.Left
 import arrow.core.Right
 
-import com.lain.beerapp.network.model.ApiError
-import com.lain.beerapp.network.model.HttpError
-import com.lain.beerapp.network.model.NetworkError
-import com.lain.beerapp.network.model.UnknownApiError
+import com.lain.beerapp.network.errors.ApiError
+import com.lain.beerapp.network.errors.HttpError
+import com.lain.beerapp.network.errors.NetworkError
+import com.lain.beerapp.network.errors.UnknownApiError
 
 import okhttp3.Request
 import okio.Timeout
