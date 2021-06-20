@@ -2,6 +2,7 @@ package com.lain.beerapp.view
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import com.lain.beerapp.view.activity.ErrorActivity
 import com.lain.beerapp.view.activity.MainActivity
@@ -26,7 +27,7 @@ object Router {
      * Go to main activity.
      * @param context: the current context.
      */
-    fun goToMain(context: Context){
+    fun goToMain(context: Context) {
         val intent = Intent(context, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         context.startActivity(intent)
@@ -36,7 +37,7 @@ object Router {
      * Go to error activity.
      * @param context: the current context.
      */
-    fun goToError(context: Context, error: String? = null){
+    fun goToError(context: Context, error: String? = null) {
         val intent = Intent(context, ErrorActivity::class.java)
         intent.putExtra(Extras.ERROR.name, error ?: "")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -48,8 +49,21 @@ object Router {
      * @param navController [NavController].
      * @param beer [BeerDTO]
      */
-    fun goToBeerDetail(navController: NavController, beer : BeerDTO){
+    fun goToBeerDetail(navController: NavController, beer: BeerDTO) {
         val bundle = bundleOf(Extras.BEER.value to beer)
         navController.navigate(R.id.action_beerListFragment_to_beerDetailFragment, bundle)
+    }
+
+    /**
+     * Handle actions to back.
+     * @param navController [NavController].
+     * @return [OnBackPressedCallback]
+     */
+    fun onBackPressed(navController: NavController): OnBackPressedCallback {
+        return object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navController.navigateUp()
+            }
+        }
     }
 }
