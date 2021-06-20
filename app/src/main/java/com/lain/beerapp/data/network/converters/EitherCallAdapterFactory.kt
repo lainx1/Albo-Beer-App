@@ -1,13 +1,13 @@
-package com.lain.beerapp.network.converters
+package com.lain.beerapp.data.network.converters
 
 import arrow.core.Either
 import arrow.core.Left
 import arrow.core.Right
 
-import com.lain.beerapp.network.errors.ApiError
-import com.lain.beerapp.network.errors.HttpError
-import com.lain.beerapp.network.errors.NetworkError
-import com.lain.beerapp.network.errors.UnknownApiError
+import com.lain.beerapp.data.network.errors.ApiError
+import com.lain.beerapp.data.network.errors.HttpError
+import com.lain.beerapp.data.network.errors.NetworkError
+import com.lain.beerapp.data.network.errors.UnknownApiError
 
 import okhttp3.Request
 import okio.Timeout

@@ -1,8 +1,8 @@
-package com.lain.beerapp.network.source
+package com.lain.beerapp.data.network.source
 
 import arrow.core.Either
-import com.lain.beerapp.network.entity.Beer
-import com.lain.beerapp.network.errors.ApiError
+import com.lain.beerapp.data.network.entity.Beer
+import com.lain.beerapp.data.network.errors.ApiError
 import retrofit2.http.GET
 import retrofit2.http.Query
 

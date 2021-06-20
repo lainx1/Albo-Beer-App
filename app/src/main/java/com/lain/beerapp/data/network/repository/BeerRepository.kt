@@ -1,8 +1,8 @@
-package com.lain.beerapp.network.repository
+package com.lain.beerapp.data.network.repository
 
 import arrow.core.Either
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.network.errors.ApiError
+import com.lain.beerapp.data.network.errors.ApiError
 
 interface BeerRepository {
 

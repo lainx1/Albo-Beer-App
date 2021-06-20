@@ -1,7 +1,7 @@
-package com.lain.beerapp.network.mapper
+package com.lain.beerapp.data.network.mapper
 
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.network.entity.Beer
+import com.lain.beerapp.data.network.entity.Beer
 
 /**
  * This class map beer to dto.

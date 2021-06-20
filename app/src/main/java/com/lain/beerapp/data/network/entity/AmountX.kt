@@ -1,4 +1,4 @@
-package com.lain.beerapp.network.entity
+package com.lain.beerapp.data.network.entity
 
 data class AmountX(
     val unit: String?,

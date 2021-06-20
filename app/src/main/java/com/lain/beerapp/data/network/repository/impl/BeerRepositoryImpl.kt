@@ -1,11 +1,11 @@
-package com.lain.beerapp.network.repository.impl
+package com.lain.beerapp.data.network.repository.impl
 
 import arrow.core.Either
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.network.mapper.BeerMapper
-import com.lain.beerapp.network.repository.BeerRepository
-import com.lain.beerapp.network.source.PunkApi
-import com.lain.beerapp.network.errors.ApiError
+import com.lain.beerapp.data.network.mapper.BeerMapper
+import com.lain.beerapp.data.network.repository.BeerRepository
+import com.lain.beerapp.data.network.source.PunkApi
+import com.lain.beerapp.data.network.errors.ApiError
 import java.util.stream.Collectors
 import javax.inject.Inject
 
