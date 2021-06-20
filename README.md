@@ -2,6 +2,8 @@
 
 This applications is a list -> details for beers 🍻🍻.
 
+Compatible with android api 24 until android api 30.
+
     Contains
       * Infinite Scrooll.
       * List beer activity.
