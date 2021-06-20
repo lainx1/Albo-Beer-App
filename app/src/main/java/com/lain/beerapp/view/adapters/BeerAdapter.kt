@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.utils.errors.Utils
 
 
 /**
@@ -39,16 +40,12 @@ class BeerAdapter(
          */
         fun bind(beer: BeerDTO, onClickBeer: (BeerDTO) -> Unit) {
 
-            val circularProgressDrawable = CircularProgressDrawable(view.context)
-            with(circularProgressDrawable) {
-                this.strokeWidth = 5f
-                this.centerRadius = 30f
-                this.start()
-            }
 
             beerCard.setOnClickListener { onClickBeer(beer) }
-            Glide.with(view.context).load(beer.image).placeholder(circularProgressDrawable)
-                .centerCrop().into(beerIV)
+            Glide.with(view.context)
+                .load(beer.image)
+                .placeholder(Utils.getCircularProgressDrawable(context = view.context))
+                .into(beerIV)
             nameTV.text = beer.name
             tagLineTV.text = beer.tagLine
 

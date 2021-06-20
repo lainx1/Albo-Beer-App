@@ -11,10 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.BaseApp">
 
-        <activity android:name="com.lain.beerapp.view.activity.ErrorActivity"/>
-        <activity android:name="com.lain.beerapp.view.activity.MainActivity"/>
+        <activity android:name="com.lain.beerapp.view.activity.ErrorActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.lain.beerapp.view.activity.MainActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.lain.beerapp.Splash"
             android:theme="@style/Theme.BaseApp.Splash"
             android:screenOrientation="portrait">
