@@ -14,10 +14,21 @@ import com.lain.beerapp.utils.Utils
 import com.lain.beerapp.view.Router
 import java.util.*
 
+
+/**
+ * This class is the Beer Detail.
+ * @author Ivan Martinez Jiemenz.
+ */
 class BeerDetailFragment : Fragment() {
 
+    /**
+     * View
+     */
     var fragment: View? = null
 
+    /*==============================================================================================
+    ANDROID LIFE CYCLE METHODS
+    ==============================================================================================*/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

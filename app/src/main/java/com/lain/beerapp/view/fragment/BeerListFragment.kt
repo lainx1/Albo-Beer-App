@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.R
+import com.lain.beerapp.data.source.DatabaseError
+import com.lain.beerapp.network.model.HttpErrorResponse
+import com.lain.beerapp.utils.errors.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
@@ -19,6 +24,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment() {
 
+    /**
+     * View
+     */
     var fragment: View? = null
 
     /**
@@ -27,7 +35,7 @@ class BeerListFragment : BaseFragment() {
     private var PAGE = 1
 
     /**
-     * The base view model.
+     * The base view model [BeerViewModel].
      */
     @Inject
     lateinit var beerViewModel: BeerViewModel
@@ -43,6 +51,9 @@ class BeerListFragment : BaseFragment() {
         )
     }
 
+    /*==============================================================================================
+    ANDROID LIFE CYCLE METHODS
+    ==============================================================================================*/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,7 +77,24 @@ class BeerListFragment : BaseFragment() {
         beerViewModel!!.error.observe(viewLifecycleOwner, {
 
             fragment!!.mainSRL.isRefreshing = false
-            handleApiError(error = it)
+            handleApiError(error = it, handleErrors = object : HandleErrors{
+                override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
+                    Snackbar.make(requireContext(), fragment!!.parentLayout, httpErrorResponse.message, Snackbar.LENGTH_SHORT).show()
+                }
+
+                override fun onNetworkError(throwable: Throwable) {
+                    Snackbar.make(requireContext(), fragment!!.parentLayout, "Se ha perdido la conection a internet", Snackbar.LENGTH_SHORT).show()
+                }
+
+                override fun unknownApiError(throwable: Throwable) {
+                    Router.goToError(context = requireContext(), error = throwable.message)
+                }
+
+                override fun onDatabaseError(databaseError: DatabaseError) {
+
+                }
+
+            })
 
         })
 
@@ -80,6 +108,7 @@ class BeerListFragment : BaseFragment() {
 
         beerViewModel.findBeers(page = PAGE)
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
 
         return fragment
     }

@@ -1,6 +1,8 @@
 package com.lain.beerapp.view.fragment
 
+import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.lain.beerapp.network.model.*
@@ -8,7 +10,15 @@ import com.lain.beerapp.utils.errors.HandleErrors
 import com.lain.beerapp.view.Router
 import com.squareup.moshi.Moshi
 
+/**
+ * This class contains the common methods for fragments.
+ * @author Ivan Martinez Jimenez.
+ */
 open class BaseFragment : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    }
 
     /*==============================================================================================
     BASE METHODS

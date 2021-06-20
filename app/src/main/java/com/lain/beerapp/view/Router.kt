@@ -2,16 +2,16 @@ package com.lain.beerapp.view
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
-import com.lain.beerapp.view.activity.ErrorActivity
-import com.lain.beerapp.view.activity.MainActivity
 import androidx.navigation.NavController
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.view.activity.ErrorActivity
+import com.lain.beerapp.view.activity.MainActivity
 
 /**
  * This object is the router to all activities in the app.
+ * @author Ivan Martinez Jimenez.
  */
 object Router {
 
@@ -54,16 +54,4 @@ object Router {
         navController.navigate(R.id.action_beerListFragment_to_beerDetailFragment, bundle)
     }
 
-    /**
-     * Handle actions to back.
-     * @param navController [NavController].
-     * @return [OnBackPressedCallback]
-     */
-    fun onBackPressed(navController: NavController): OnBackPressedCallback {
-        return object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                navController.navigateUp()
-            }
-        }
-    }
 }
