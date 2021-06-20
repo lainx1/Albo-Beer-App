@@ -7,11 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.utils.errors.Utils
+import com.lain.beerapp.utils.Utils
 
 
 /**

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.utils.errors.Utils
+import com.lain.beerapp.utils.Utils
 import com.lain.beerapp.view.Router
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.lain.beerapp.utils.errors
+package com.lain.beerapp.utils
 
 import android.content.Context
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
