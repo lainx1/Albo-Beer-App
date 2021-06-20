@@ -10,7 +10,6 @@ import com.lain.beerapp.R
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_beer_list.*
 import kotlinx.android.synthetic.main.fragment_beer_list.view.*
 import kotlinx.android.synthetic.main.loader.*
 import javax.inject.Inject
