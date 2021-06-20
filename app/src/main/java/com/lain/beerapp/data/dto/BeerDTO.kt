@@ -1,6 +1,7 @@
 package com.lain.beerapp.data.dto
 
 import java.io.Serializable
+import kotlin.reflect.jvm.internal.impl.load.java.structure.JavaClass
 
 /**
  * This class define a dto for beer.
@@ -23,6 +24,7 @@ data class BeerDTO(
     val foodPairing: List<String>?
 
 ) : Serializable {
+
     data class Builder(
         var id: Int? = null,
         var image: String? = null,
@@ -53,5 +55,22 @@ data class BeerDTO(
             firstBrewedDate = firstBrewedDate,
             foodPairing = foodPairing
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+
+        if (javaClass != other?.javaClass)
+            return false
+
+        other as BeerDTO
+
+        if(id != other.id) return false
+        if(image != other.image) return false
+        if(name != other.name) return false
+        if(tagLine != other.tagLine) return false
+        if(description != other.description) return false
+        if(firstBrewedDate != other.firstBrewedDate) return false
+
+        return true
     }
 }

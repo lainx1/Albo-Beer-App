@@ -66,6 +66,7 @@ class BeerAdapter(
 
     override fun getItemCount(): Int = beers.size
 
+
     /*==============================================================================================
     PUBLIC METHODS
     ==============================================================================================*/
@@ -74,8 +75,11 @@ class BeerAdapter(
      * @param beers beers to add.
      */
     fun addBeers(beers: List<BeerDTO>) {
-        this.beers.addAll(beers)
-        notifyDataSetChanged()
+
+        val start = this.beers.size
+        this.beers.addAll(start, beers)
+        notifyItemRangeInserted(start, beers.size)
+
     }
 
     /**
@@ -85,4 +89,5 @@ class BeerAdapter(
         this.beers.clear()
         notifyDataSetChanged()
     }
+
 }
