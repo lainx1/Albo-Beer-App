@@ -20,3 +20,4 @@ Compatible with android api 24 until android api 30.
       * Constraint layout.
       * Either.
       * Error Handling.
+      * Navigation Component.
