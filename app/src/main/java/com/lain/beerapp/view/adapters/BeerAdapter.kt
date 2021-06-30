@@ -33,12 +33,16 @@ class BeerAdapter(
 
             beerItemBinding.beer = beer
 
-            beerItemBinding.beerCard.setOnClickListener { onClickBeer(beer) }
+            val parent = beerItemBinding.beerCard
+            val beerIV = beerItemBinding.beerIV
+            val context = beerItemBinding.root.context
 
-            Glide.with(beerItemBinding.root.context)
+            parent.setOnClickListener { onClickBeer(beer) }
+
+            Glide.with(context)
                 .load(beer.image)
-                .placeholder(Utils.getCircularProgressDrawable(context = beerItemBinding.root.context))
-                .into(beerItemBinding.beerIV)
+                .placeholder(Utils.getCircularProgressDrawable(context = context))
+                .into(beerIV)
 
         }
 
