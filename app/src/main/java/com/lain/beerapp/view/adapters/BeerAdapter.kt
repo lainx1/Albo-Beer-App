@@ -1,15 +1,12 @@
 package com.lain.beerapp.view.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.databinding.BeerItemBinding
 import com.lain.beerapp.utils.Utils
 
 
@@ -25,12 +22,7 @@ class BeerAdapter(
     /**
      * View Holder
      */
-    class BeerViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-        private val beerCard = view.findViewById<CardView>(R.id.beerCard)
-        private val beerIV = view.findViewById<ImageView>(R.id.beerIV)
-        private val nameTV = view.findViewById<TextView>(R.id.nameTV)
-        private val tagLineTV = view.findViewById<TextView>(R.id.tagLineTV)
+    class BeerViewHolder(val beerItemBinding: BeerItemBinding) : RecyclerView.ViewHolder(beerItemBinding.root) {
 
         /**
          * Bind data.
@@ -39,14 +31,14 @@ class BeerAdapter(
          */
         fun bind(beer: BeerDTO, onClickBeer: (BeerDTO) -> Unit) {
 
+            beerItemBinding.beer = beer
 
-            beerCard.setOnClickListener { onClickBeer(beer) }
-            Glide.with(view.context)
+            beerItemBinding.beerCard.setOnClickListener { onClickBeer(beer) }
+
+            Glide.with(beerItemBinding.root.context)
                 .load(beer.image)
-                .placeholder(Utils.getCircularProgressDrawable(context = view.context))
-                .into(beerIV)
-            nameTV.text = beer.name
-            tagLineTV.text = beer.tagLine
+                .placeholder(Utils.getCircularProgressDrawable(context = beerItemBinding.root.context))
+                .into(beerItemBinding.beerIV)
 
         }
 
@@ -58,11 +50,13 @@ class BeerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder =
         BeerViewHolder(
-            view = LayoutInflater.from(parent.context).inflate(R.layout.beer_item, parent, false)
+            beerItemBinding = BeerItemBinding.bind(LayoutInflater.from(parent.context).inflate(R.layout.beer_item, parent, false))
         )
 
-    override fun onBindViewHolder(holder: BeerViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: BeerViewHolder, position: Int) {
         holder.bind(beer = beers[position], onClickBeer = onClickBeer)
+    }
+
 
     override fun getItemCount(): Int = beers.size
 
