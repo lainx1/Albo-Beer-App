@@ -11,22 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.R
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
+import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_beer_list.view.*
-import kotlinx.android.synthetic.main.loader.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment() {
-
-    /**
-     * View
-     */
-    var fragment: View? = null
 
     /**
      * Pagination control
@@ -40,6 +34,13 @@ class BeerListFragment : BaseFragment() {
     lateinit var beerViewModel: BeerViewModel
 
     /**
+     * Beer list binding
+     */
+    private var _binding : BeerListBinding ?= null
+
+    private val binding get() = _binding!!
+
+    /**
      * Beer adapter
      */
     private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
@@ -50,39 +51,39 @@ class BeerListFragment : BaseFragment() {
         )
     }
 
-    /*==============================================================================================
-    ANDROID LIFE CYCLE METHODS
-    ==============================================================================================*/
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        fragment = inflater.inflate(R.layout.fragment_beer_list, container, false)
+        _binding = BeerListBinding.inflate(inflater, container, false)
 
         // Inflate the layout for this fragment
-        with(fragment!!.beerRV) {
-            //this.setHasFixedSize(true)
+        binding.beerRV.apply {
             this.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             this.adapter = beerAdapter
         }
 
-        beerViewModel!!.loading.observe(viewLifecycleOwner, {
+        beerViewModel.loading.observe(viewLifecycleOwner, {
 
-            showLoader(loader = loader, loading = it)
+            showLoader(loader = binding.loaderContainer.loader, loading = it)
 
         })
 
-        beerViewModel!!.error.observe(viewLifecycleOwner, {
+        /**
+         * Observe errors.
+         */
+        beerViewModel.error.observe(viewLifecycleOwner, {
 
-            fragment!!.mainSRL.isRefreshing = false
+            binding.mainSRL.isRefreshing = false
             handleApiError(error = it, handleErrors = object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-                    Snackbar.make(requireContext(), fragment!!.parentLayout, httpErrorResponse.message, Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireContext(), binding.parentLayout, httpErrorResponse.message, Snackbar.LENGTH_SHORT).show()
                 }
 
                 override fun onNetworkError(throwable: Throwable) {
-                    Snackbar.make(requireContext(), fragment!!.parentLayout, "Se ha perdido la conection a internet", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireContext(), binding.parentLayout, "Se ha perdido la conection a internet", Snackbar.LENGTH_SHORT).show()
                 }
 
                 override fun unknownApiError(throwable: Throwable) {
@@ -93,25 +94,31 @@ class BeerListFragment : BaseFragment() {
 
         })
 
-        beerViewModel!!.beers.observe(viewLifecycleOwner, {
+        /**
+         * Observe beer list
+         */
+        beerViewModel.beers.observe(viewLifecycleOwner, {
 
-            fragment!!.mainSRL.isRefreshing = false
+            binding.mainSRL.isRefreshing = false
             beerAdapter.addBeers(beers = it)
 
 
         })
 
+        /**
+         * Request first beers
+         */
         beerViewModel.findBeers(page = PAGE)
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
 
-        return fragment
-    }
+        return binding.root
 
+    }
 
     override fun onStart() {
         super.onStart()
-        fragment!!.beerRV.addOnScrollListener(object  : RecyclerView.OnScrollListener() {
+        binding.beerRV.addOnScrollListener(object  : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -121,14 +128,13 @@ class BeerListFragment : BaseFragment() {
             }
         })
 
-        fragment!!.mainSRL.setOnRefreshListener {
-            if (fragment!!.mainSRL.isRefreshing) {
+        binding.mainSRL.setOnRefreshListener {
+            if (binding.mainSRL.isRefreshing) {
                 PAGE = 1
                 beerAdapter.clearBeers()
                 beerViewModel.findBeers(page = PAGE)
             }
         }
     }
-
 
 }
