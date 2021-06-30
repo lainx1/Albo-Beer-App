@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.databinding.BeerDetailBinding
 import com.lain.beerapp.utils.Utils
 import com.lain.beerapp.view.Router
 import java.util.*
@@ -22,9 +22,11 @@ import java.util.*
 class BeerDetailFragment : Fragment() {
 
     /**
-     * View
+     * Binding
      */
-    var fragment: View? = null
+    private var _binding : BeerDetailBinding ?= null
+
+    private val binding get() = _binding!!
 
     /*==============================================================================================
     ANDROID LIFE CYCLE METHODS
@@ -34,30 +36,42 @@ class BeerDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        fragment = inflater.inflate(R.layout.fragment_beer_detail, container, false)
+
+        _binding = BeerDetailBinding.inflate(inflater, container, false)
 
 
         val beer = arguments?.getSerializable(Router.Extras.BEER.value) as BeerDTO
 
+        /**
+         * Set title
+         */
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = beer.name
+
+        /**
+         * Build food pairing
+         */
+        var foodPairing = ""
+        for(_foodPairing in Optional.ofNullable(beer.foodPairing).orElse(listOf()))
+            foodPairing += String.format(resources.getString(R.string.detail_activity_food_pairing_item), _foodPairing)
+
+        /**
+         * Load image
+         */
+
         Glide.with(requireContext())
             .load(beer.image)
             .placeholder(Utils.getCircularProgressDrawable(context = requireContext()))
-            .into(fragment!!.findViewById(R.id.beerIV))
+            .into(binding.beerIV)
 
-        fragment!!.findViewById<TextView>(R.id.tagLineTV).text = beer.tagLine
-        fragment!!.findViewById<TextView>(R.id.firstBrewedTV).text = "First brewed: ${beer.firstBrewedDate}"
-        fragment!!.findViewById<TextView>(R.id.descriptionTV).text = "🍻 ${beer.description}"
+        /**
+         * Set data
+         */
+        binding.firstBrewedTV.text = String.format(resources.getString(R.string.detail_activity_first_brewed), beer.firstBrewedDate)
+        binding.descriptionTV.text = String.format(resources.getString(R.string.detail_activity_description), beer.description)
+        binding.foodPairingTV.text = foodPairing
 
-        var foodPairing = ""
-        for(_foodPairing in Optional.ofNullable(beer.foodPairing).orElse(listOf()))
-            foodPairing += "😋 -> $_foodPairing\n"
+        return binding.root
 
-        fragment!!.findViewById<TextView>(R.id.foodPairingTV).text = foodPairing
-
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = beer.name
-
-        return fragment
     }
 
 

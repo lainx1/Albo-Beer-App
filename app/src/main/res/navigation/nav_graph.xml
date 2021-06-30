@@ -18,7 +18,7 @@
         android:id="@+id/beerDetailFragment"
         android:name="com.lain.beerapp.view.fragment.BeerDetailFragment"
         android:label="fragment_beer_detail"
-        tools:layout="@layout/fragment_beer_detail" >
+        tools:layout="@layout/beer_detail" >
         <argument
             android:name="beer"
             app:argType="com.lain.beerapp.data.dto.BeerDTO" />
