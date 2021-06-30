@@ -66,6 +66,7 @@ class BeerDetailFragment : Fragment() {
         /**
          * Set data
          */
+        binding.tagLineTV.text = beer.tagLine
         binding.firstBrewedTV.text = String.format(resources.getString(R.string.detail_activity_first_brewed), beer.firstBrewedDate)
         binding.descriptionTV.text = String.format(resources.getString(R.string.detail_activity_description), beer.description)
         binding.foodPairingTV.text = foodPairing
