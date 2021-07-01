@@ -14,11 +14,10 @@
 
         android:theme="@style/Theme.BaseApp">
 
-        <activity android:name="com.lain.beerapp.view.activity.ErrorActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.lain.beerapp.view.activity.MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.lain.beerapp.view.activity.MainActivity" android:screenOrientation="fullSensor"/>
         <activity android:name="com.lain.beerapp.Splash"
             android:theme="@style/Theme.BaseApp.Splash"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

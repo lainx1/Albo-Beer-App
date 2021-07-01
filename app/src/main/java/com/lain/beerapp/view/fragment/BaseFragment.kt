@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.airbnb.lottie.LottieAnimationView
+import com.lain.beerapp.R
+import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.data.network.errors.*
+import com.lain.beerapp.data.network.mapper.ErrorMapper
 import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.squareup.moshi.Moshi
@@ -15,6 +19,7 @@ import com.squareup.moshi.Moshi
  * @author Ivan Martinez Jimenez.
  */
 open class BaseFragment : Fragment() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -51,7 +56,7 @@ open class BaseFragment : Fragment() {
                 return
             }
 
-            Router.goToError(context = requireContext(), error = "Error: ${httpErrorResponse?.status}: ${httpErrorResponse?.message}")
+            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${httpErrorResponse?.status}: ${httpErrorResponse?.message}"))
 
 
         }else if(error is NetworkError){
@@ -62,7 +67,7 @@ open class BaseFragment : Fragment() {
             }
 
             //This is the default behavior
-            Router.goToError(context = requireContext(), error = "Error: ${error.throwable.message}")
+            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${error.throwable.message}"))
 
         }else{
 
@@ -74,9 +79,20 @@ open class BaseFragment : Fragment() {
             }
 
 
-            Router.goToError(context = requireContext(), error = "Error: ${error.throwable.message}")
+            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${error.throwable.message}"))
 
         }
+    }
+
+    /**
+     * Build a base error.
+     * @param message the message to show.
+     * @return [ErrorDTO].
+     */
+    private fun baseError(message: String) : ErrorDTO{
+        return ErrorMapper.map(
+            message = message
+        )
     }
 
 }

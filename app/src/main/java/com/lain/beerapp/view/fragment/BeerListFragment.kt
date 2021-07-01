@@ -8,11 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.R
-import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.databinding.BeerListBinding
-import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
@@ -77,20 +74,7 @@ class BeerListFragment : BaseFragment() {
         beerViewModel.error.observe(viewLifecycleOwner, {
 
             binding.mainSRL.isRefreshing = false
-            handleApiError(error = it, handleErrors = object : HandleErrors {
-                override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-                    Snackbar.make(requireContext(), binding.parentLayout, httpErrorResponse.message, Snackbar.LENGTH_SHORT).show()
-                }
-
-                override fun onNetworkError(throwable: Throwable) {
-                    Snackbar.make(requireContext(), binding.parentLayout, "Se ha perdido la conection a internet", Snackbar.LENGTH_SHORT).show()
-                }
-
-                override fun unknownApiError(throwable: Throwable) {
-                    Router.goToError(context = requireContext(), error = throwable.message)
-                }
-
-            })
+            handleApiError(error = it)
 
         })
 

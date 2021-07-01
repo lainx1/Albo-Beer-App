@@ -2,11 +2,13 @@ package com.lain.beerapp.view
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.view.activity.ErrorActivity
+import com.lain.beerapp.data.dto.ErrorDTO
+import com.lain.beerapp.view.fragment.ErrorFragment
 import com.lain.beerapp.view.activity.MainActivity
 
 /**
@@ -35,13 +37,22 @@ object Router {
 
     /**
      * Go to error activity.
-     * @param context: the current context.
+     * @param error: to show.
      */
-    fun goToError(context: Context, error: String? = null) {
-        val intent = Intent(context, ErrorActivity::class.java)
-        intent.putExtra(Extras.ERROR.name, error ?: "")
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context.startActivity(intent)
+    fun goToError(navController: NavController, error: ErrorDTO? = null) {
+
+
+        val bundle = bundleOf(Extras.ERROR.value to error)
+        navController.navigate(R.id.action_beerListFragment_to_errorFragment, bundle)
+
+    }
+
+    /**
+     * Go error to main
+     * @param navController [NavController].
+     */
+    fun errorToMain(navController: NavController){
+        navController.navigate(R.id.action_errorFragment_to_beerListFragment)
     }
 
     /**

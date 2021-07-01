@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_beerListFragment_to_beerDetailFragment"
             app:destination="@id/beerDetailFragment" />
+        <action
+            android:id="@+id/action_beerListFragment_to_errorFragment"
+            app:destination="@id/errorFragment" />
     </fragment>
     <fragment
         android:id="@+id/beerDetailFragment"
@@ -22,5 +25,14 @@
         <argument
             android:name="beer"
             app:argType="com.lain.beerapp.data.dto.BeerDTO" />
+    </fragment>
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.lain.beerapp.view.fragment.ErrorFragment"
+        tools:layout="@layout/error"
+        android:label="ErrorFragment" >
+        <action
+            android:id="@+id/action_errorFragment_to_beerListFragment"
+            app:destination="@id/beerListFragment" />
     </fragment>
 </navigation>

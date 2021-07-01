@@ -10,7 +10,7 @@ import com.lain.beerapp.data.network.entity.Beer
 object BeerMapper {
 
     /**
-     * MApp beer to dto.
+     * Map beer to dto.
      */
     fun map(beer: Beer) : BeerDTO{
 
