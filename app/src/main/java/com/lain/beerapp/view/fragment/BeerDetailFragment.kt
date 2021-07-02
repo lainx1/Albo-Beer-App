@@ -17,7 +17,7 @@ import java.util.*
 
 /**
  * This class is the Beer Detail.
- * @author Ivan Martinez Jiemenz.
+ * @author Ivan Martinez Jimenez.
  */
 class BeerDetailFragment : Fragment() {
 
