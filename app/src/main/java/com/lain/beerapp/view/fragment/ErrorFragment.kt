@@ -59,7 +59,7 @@ class ErrorFragment : Fragment() {
 
         super.onStart()
         binding.reconnectBTN.setOnClickListener {
-            
+
             Router.route(
                 route = Router.Routes.ERROR_TO_BEER_LIST,
                 requireContext()
