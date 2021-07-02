@@ -1,5 +1,6 @@
 package com.lain.beerapp.data.dto
 
+import com.lain.beerapp.view.Router
 import java.io.Serializable
 
 /**
@@ -12,5 +13,10 @@ data class ErrorDTO (
      * Error message
      */
     var message : String ?= null,
+
+    /**
+     * Route to reconnect
+     */
+    var route: Router.Routes
 
 ) : Serializable

@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.airbnb.lottie.LottieAnimationView
-import com.lain.beerapp.R
-import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.data.network.errors.*
-import com.lain.beerapp.data.network.mapper.ErrorMapper
 import com.lain.beerapp.utils.HandleErrors
-import com.lain.beerapp.view.Router
 import com.squareup.moshi.Moshi
 
 /**
@@ -33,9 +28,9 @@ open class BaseFragment : Fragment() {
      * @param loader: the loader to hide / show.
      * @param loading: control the loader visibility, true show loading, false hide loading.
      */
-    fun showLoader(loader: LottieAnimationView, loading: Boolean){
-        with(loader){
-            this.visibility = if(loading) View.VISIBLE else View.GONE
+    fun showLoader(loader: LottieAnimationView, loading: Boolean) {
+        with(loader) {
+            this.visibility = if (loading) View.VISIBLE else View.GONE
         }
     }
 
@@ -44,55 +39,35 @@ open class BaseFragment : Fragment() {
      * @param error: the error to handle.
      * @param handleErrors: a interface to define the behavior for specific errors, if is null then send to error activity.
      */
-    fun handleApiError(error: ApiError, handleErrors: HandleErrors? = null){
+    fun handleApiError(error: ApiError, handleErrors: HandleErrors) {
+        when (error) {
+            /**
+             * Is [HttpError]
+             */
+            is HttpError -> {
 
-        if(error is HttpError){
+                val httpErrorResponseAdapter =
+                    Moshi.Builder().build().adapter(HttpErrorResponse::class.java)
+                val httpErrorResponse = httpErrorResponseAdapter.fromJson(error.body)
 
-            val httpErrorResponseAdapter = Moshi.Builder().build().adapter(HttpErrorResponse::class.java)
-            val httpErrorResponse = httpErrorResponseAdapter.fromJson(error.body)
-
-            if(handleErrors != null){
                 handleErrors.onHttpError(httpErrorResponse = httpErrorResponse!!)
-                return
+
             }
 
-            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${httpErrorResponse?.status}: ${httpErrorResponse?.message}"))
+            /**
+             * Is [NetworkError]
+             */
+            is NetworkError -> handleErrors.onNetworkError(throwable = error.throwable)
 
-
-        }else if(error is NetworkError){
-
-            if(handleErrors != null){
-                handleErrors.onNetworkError(throwable = error.throwable)
-                return
-            }
-
-            //This is the default behavior
-            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${error.throwable.message}"))
-
-        }else{
-
-            error as UnknownApiError
-
-            if(handleErrors != null){
-                handleErrors.onNetworkError(throwable = error.throwable)
-                return
-            }
-
-
-            Router.goToError(navController = requireActivity().findNavController(R.id.nav_host_fragment), baseError(message = "Error: ${error.throwable.message}"))
+            /**
+             * Is [UnknownApiError]
+             */
+            is UnknownApiError -> handleErrors.onNetworkError(throwable = error.throwable)
 
         }
+
+
     }
 
-    /**
-     * Build a base error.
-     * @param message the message to show.
-     * @return [ErrorDTO].
-     */
-    private fun baseError(message: String) : ErrorDTO{
-        return ErrorMapper.map(
-            message = message
-        )
-    }
 
 }

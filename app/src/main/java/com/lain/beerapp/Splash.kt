@@ -16,7 +16,10 @@ class Splash: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        Router.goToMain(context = this)
+        Router.route(
+            route = Router.Routes.MAIN,
+            this
+        )
         finish()
     }
 

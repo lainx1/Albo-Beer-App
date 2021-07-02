@@ -9,13 +9,20 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lain.beerapp.R
+import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.databinding.BeerListBinding
+import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
+import com.lain.beerapp.view.errors.Errors
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * This class contains the beer list.
+ * @author Ivan Martinez Jimenez.
+ */
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment() {
 
@@ -33,7 +40,7 @@ class BeerListFragment : BaseFragment() {
     /**
      * Beer list binding
      */
-    private var _binding : BeerListBinding ?= null
+    private var _binding: BeerListBinding? = null
 
     private val binding get() = _binding!!
 
@@ -41,11 +48,16 @@ class BeerListFragment : BaseFragment() {
      * Beer adapter
      */
     private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
+        Router.route(
 
-        Router.goToBeerDetail(
-            navController = requireActivity().findNavController(R.id.nav_host_fragment),
-            beer = beer
+            route = Router.Routes.BEER_LIST_TO_BEER_DETAIL,
+            /**
+             * Args
+             */
+            requireActivity().findNavController(R.id.nav_host_fragment), beer
+
         )
+
     }
 
     override fun onCreateView(
@@ -74,7 +86,33 @@ class BeerListFragment : BaseFragment() {
         beerViewModel.error.observe(viewLifecycleOwner, {
 
             binding.mainSRL.isRefreshing = false
-            handleApiError(error = it)
+            handleApiError(error = it, object : HandleErrors {
+                override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
+                    Errors.showSnackBarError(
+                        view = binding.parentLayout,
+                        message = httpErrorResponse.message
+                    )
+                }
+
+                override fun onNetworkError(throwable: Throwable) {
+                    throwable.message?.let { message ->
+                        Errors.showSnackBarError(
+                            view = binding.parentLayout,
+                            message = message
+                        )
+                    }
+                }
+
+                override fun unknownApiError(throwable: Throwable) {
+                    throwable.message?.let { message ->
+                        Errors.showSnackBarError(
+                            view = binding.parentLayout,
+                            message = message
+                        )
+                    }
+                }
+
+            })
 
         })
 
@@ -94,7 +132,8 @@ class BeerListFragment : BaseFragment() {
          */
         beerViewModel.findBeers(page = PAGE)
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title =
+            getString(R.string.app_name)
 
         return binding.root
 
@@ -102,7 +141,7 @@ class BeerListFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.beerRV.addOnScrollListener(object  : RecyclerView.OnScrollListener() {
+        binding.beerRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {

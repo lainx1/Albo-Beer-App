@@ -58,7 +58,14 @@ class ErrorFragment : Fragment() {
     override fun onStart() {
 
         super.onStart()
-        binding.reconnectBTN.setOnClickListener { Router.errorToMain(requireActivity().findNavController( R.id.nav_host_fragment)) }
+        binding.reconnectBTN.setOnClickListener {
+            
+            Router.route(
+                route = Router.Routes.ERROR_TO_BEER_LIST,
+                requireContext()
+            )
+
+        }
 
     }
 }
