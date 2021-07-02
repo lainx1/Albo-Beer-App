@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lain.beerapp.R
+import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.utils.HandleErrors
@@ -37,6 +38,12 @@ class BeerListFragment : BaseFragment() {
     @Inject
     lateinit var beerViewModel: BeerViewModel
 
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var errors: Errors
+
     /**
      * Beer list binding
      */
@@ -48,7 +55,7 @@ class BeerListFragment : BaseFragment() {
      * Beer adapter
      */
     private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
-        Router.route(
+        router.route(
 
             route = Router.Routes.BEER_LIST_TO_BEER_DETAIL,
             /**
@@ -88,24 +95,30 @@ class BeerListFragment : BaseFragment() {
             binding.mainSRL.isRefreshing = false
             handleApiError(error = it, object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-                    Errors.showSnackBarError(
-                        view = binding.parentLayout,
-                        message = httpErrorResponse.message
+                    router.route(
+                        Router.Routes.BEER_LIST_TO_ERROR,
+                        requireActivity().findNavController(R.id.nav_host_fragment), ErrorDTO(
+                            message = httpErrorResponse.message,
+                            route = Router.Routes.ERROR_TO_BEER_LIST
+                        )
                     )
                 }
 
                 override fun onNetworkError(throwable: Throwable) {
                     throwable.message?.let { message ->
-                        Errors.showSnackBarError(
-                            view = binding.parentLayout,
-                            message = message
+                        router.route(
+                            Router.Routes.BEER_LIST_TO_ERROR,
+                            requireActivity().findNavController(R.id.nav_host_fragment), ErrorDTO(
+                                message = message,
+                                route = Router.Routes.ERROR_TO_BEER_LIST
+                            )
                         )
                     }
                 }
 
                 override fun unknownApiError(throwable: Throwable) {
                     throwable.message?.let { message ->
-                        Errors.showSnackBarError(
+                        errors.showSnackBarError(
                             view = binding.parentLayout,
                             message = message
                         )

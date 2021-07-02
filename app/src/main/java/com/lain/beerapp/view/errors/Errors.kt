@@ -6,12 +6,13 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.view.Router
+import javax.inject.Inject
 
 /**
  * This class display error kinds.
  * @author Ivan Martinez Jimenez.
  */
-object Errors {
+class Errors @Inject constructor(private val router: Router) {
 
     /**
      * Show toast error.
@@ -32,6 +33,6 @@ object Errors {
      * @param errorRoute route to error [Router.Routes].
      * @param errorDTO [ErrorDTO].
      */
-    fun showErrorView(errorRoute: Router.Routes, errorDTO: ErrorDTO) = Router.route(errorRoute, errorDTO)
+    fun showErrorView(errorRoute: Router.Routes, errorDTO: ErrorDTO) = router.route(errorRoute, errorDTO)
 
 }

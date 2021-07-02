@@ -11,12 +11,18 @@ import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.databinding.ErrorBinding
 import com.lain.beerapp.view.Router
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * This class is the default error activity.
  * @author Ivan Martinez Jimenez.
  */
+@AndroidEntryPoint
 class ErrorFragment : Fragment() {
+
+    @Inject
+    lateinit var router: Router
 
     /**s
      * Binding
@@ -60,9 +66,9 @@ class ErrorFragment : Fragment() {
         super.onStart()
         binding.reconnectBTN.setOnClickListener {
 
-            Router.route(
+            router.route(
                 route = Router.Routes.ERROR_TO_BEER_LIST,
-                requireContext()
+                requireActivity().findNavController(R.id.nav_host_fragment)
             )
 
         }

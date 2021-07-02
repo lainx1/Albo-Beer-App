@@ -1,19 +1,16 @@
 package com.lain.beerapp.view
 
-import android.content.Context
-import android.content.Intent
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
 import com.lain.beerapp.data.dto.ErrorDTO
-import com.lain.beerapp.view.activity.MainActivity
 
 /**
  * This object is the router to all activities in the app.
  * @author Ivan Martinez Jimenez.
  */
-object Router {
+class Router{
 
     /**
      * The extras passed by activities.
@@ -24,7 +21,6 @@ object Router {
     }
 
     enum class Routes {
-        MAIN,
         BEER_LIST_TO_BEER_DETAIL,
         BEER_LIST_TO_ERROR,
         ERROR_TO_BEER_LIST
@@ -42,7 +38,6 @@ object Router {
      *
      * Args:
      *
-     * [Routes.MAIN] -> 0 : [Context].
      * [Routes.BEER_LIST_TO_BEER_DETAIL] -> 0 : [NavController], 1 : [BeerDTO].
      * [Routes.BEER_LIST_TO_ERROR] -> 0 : [NavController], 1 : [ErrorDTO].
      * [Routes.ERROR_TO_BEER_LIST] -> 0 : [NavController], 1 : [ErrorDTO].
@@ -51,8 +46,6 @@ object Router {
     fun route(route: Routes, vararg args: Any){
 
         when(route){
-
-            Routes.MAIN -> goToMain(context = args[0] as Context)
 
             Routes.BEER_LIST_TO_BEER_DETAIL -> beerListToBeerDetail(navController = args[0] as NavController, beer = args[1] as BeerDTO)
 
@@ -66,16 +59,6 @@ object Router {
     /*==============================================================================================
     VIEW ROUTING
     ==============================================================================================*/
-
-    /**
-     * Go to main activity.
-     * @param context: the current context.
-     */
-    private fun goToMain(context: Context) = context.startActivity(
-        Intent(context, MainActivity::class.java).apply {
-            this.flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        }
-    )
 
 
     /**
