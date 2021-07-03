@@ -21,9 +21,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
 
-    @Inject
-    lateinit var router: Router
-
     /**s
      * Binding
      */
@@ -66,7 +63,7 @@ class ErrorFragment : Fragment() {
         super.onStart()
         binding.reconnectBTN.setOnClickListener {
 
-            router.route(
+            Router.route(
                 route = Router.Routes.ERROR_TO_BEER_LIST,
                 requireActivity().findNavController(R.id.nav_host_fragment)
             )

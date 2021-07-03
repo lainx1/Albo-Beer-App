@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lain.beerapp.R
-import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
-import com.lain.beerapp.view.errors.Errors
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,12 +35,6 @@ class BeerListFragment : BaseFragment() {
     @Inject
     lateinit var beerViewModel: BeerViewModel
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var errors: Errors
-
     /**
      * Beer list binding
      */
@@ -55,13 +46,13 @@ class BeerListFragment : BaseFragment() {
      * Beer adapter
      */
     private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
-        router.route(
+        Router.route(
 
             route = Router.Routes.BEER_LIST_TO_BEER_DETAIL,
             /**
              * Args
              */
-            requireActivity().findNavController(R.id.nav_host_fragment), beer
+            beer
 
         )
 
@@ -95,34 +86,15 @@ class BeerListFragment : BaseFragment() {
             binding.mainSRL.isRefreshing = false
             handleApiError(error = it, object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-                    router.route(
-                        Router.Routes.BEER_LIST_TO_ERROR,
-                        requireActivity().findNavController(R.id.nav_host_fragment), ErrorDTO(
-                            message = httpErrorResponse.message,
-                            route = Router.Routes.ERROR_TO_BEER_LIST
-                        )
-                    )
+
                 }
 
                 override fun onNetworkError(throwable: Throwable) {
-                    throwable.message?.let { message ->
-                        router.route(
-                            Router.Routes.BEER_LIST_TO_ERROR,
-                            requireActivity().findNavController(R.id.nav_host_fragment), ErrorDTO(
-                                message = message,
-                                route = Router.Routes.ERROR_TO_BEER_LIST
-                            )
-                        )
-                    }
+
                 }
 
                 override fun unknownApiError(throwable: Throwable) {
-                    throwable.message?.let { message ->
-                        errors.showSnackBarError(
-                            view = binding.parentLayout,
-                            message = message
-                        )
-                    }
+
                 }
 
             })

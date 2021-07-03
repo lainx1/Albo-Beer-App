@@ -34,5 +34,8 @@
         <action
             android:id="@+id/action_errorFragment_to_beerListFragment"
             app:destination="@id/beerListFragment" />
+        <argument
+            android:name="error"
+            app:argType="com.lain.beerapp.data.dto.ErrorDTO" />
     </fragment>
 </navigation>

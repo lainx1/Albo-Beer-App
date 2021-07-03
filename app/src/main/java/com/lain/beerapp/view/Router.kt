@@ -1,16 +1,22 @@
 package com.lain.beerapp.view
 
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
 import com.lain.beerapp.data.dto.ErrorDTO
+import com.lain.beerapp.view.fragment.BeerListFragmentDirections
 
 /**
  * This object is the router to all activities in the app.
  * @author Ivan Martinez Jimenez.
  */
-class Router{
+object Router{
+
+    /**
+     * Navigation controller.
+     */
+    lateinit var navController: NavController
+
 
     /**
      * The extras passed by activities.
@@ -34,7 +40,7 @@ class Router{
      * Routing handler.
      *
      * @param route [Routes].
-     * @param args required args for any route.
+     * @param arg required args for any route.
      *
      * Args:
      *
@@ -43,15 +49,15 @@ class Router{
      * [Routes.ERROR_TO_BEER_LIST] -> 0 : [NavController], 1 : [ErrorDTO].
      *
      */
-    fun route(route: Routes, vararg args: Any){
+    fun route(route: Routes, arg: Any ?= null){
 
         when(route){
 
-            Routes.BEER_LIST_TO_BEER_DETAIL -> beerListToBeerDetail(navController = args[0] as NavController, beer = args[1] as BeerDTO)
+            Routes.BEER_LIST_TO_BEER_DETAIL -> beerListToBeerDetail(navController = navController, beer = arg as BeerDTO)
 
-            Routes.BEER_LIST_TO_ERROR -> beerListToError(navController = args[0] as NavController, error = args[1] as ErrorDTO)
+            Routes.BEER_LIST_TO_ERROR -> beerListToError(navController = navController, error = arg as ErrorDTO)
 
-            Routes.ERROR_TO_BEER_LIST -> errorToBeerList(navController = args[0] as NavController)
+            Routes.ERROR_TO_BEER_LIST -> errorToBeerList(navController = navController)
 
         }
     }
@@ -67,9 +73,9 @@ class Router{
      * @param beer [BeerDTO].
      */
     private fun beerListToBeerDetail(navController: NavController, beer: BeerDTO) = navController.navigate(
-        R.id.action_beerListFragment_to_beerDetailFragment,
-        bundleOf(Extras.BEER.value to beer)
+        BeerListFragmentDirections.actionBeerListFragmentToBeerDetailFragment(beer = beer)
     )
+
 
 
     /*==============================================================================================
@@ -82,8 +88,7 @@ class Router{
      * @param error [ErrorDTO] to show.
      */
     private fun beerListToError(navController: NavController, error: ErrorDTO) = navController.navigate(
-        R.id.action_beerListFragment_to_errorFragment,
-        bundleOf(Extras.ERROR.value to error)
+        BeerListFragmentDirections.actionBeerListFragmentToErrorFragment(error = error)
     )
 
     /*==============================================================================================
