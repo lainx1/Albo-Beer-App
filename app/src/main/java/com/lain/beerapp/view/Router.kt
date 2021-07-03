@@ -20,12 +20,16 @@ object Router{
 
     /**
      * The extras passed by activities.
+     * If are some update, then also update nav_graph arguments name.
      */
     enum class Extras(val value: String) {
         ERROR("error"),
         BEER("beer")
     }
 
+    /**
+     * Routes available.
+     */
     enum class Routes {
         BEER_LIST_TO_BEER_DETAIL,
         BEER_LIST_TO_ERROR,
@@ -44,9 +48,9 @@ object Router{
      *
      * Args:
      *
-     * [Routes.BEER_LIST_TO_BEER_DETAIL] -> 0 : [NavController], 1 : [BeerDTO].
-     * [Routes.BEER_LIST_TO_ERROR] -> 0 : [NavController], 1 : [ErrorDTO].
-     * [Routes.ERROR_TO_BEER_LIST] -> 0 : [NavController], 1 : [ErrorDTO].
+     * [Routes.BEER_LIST_TO_BEER_DETAIL] -> arg : [BeerDTO].
+     * [Routes.BEER_LIST_TO_ERROR] -> arg : [ErrorDTO].
+     * [Routes.ERROR_TO_BEER_LIST] -> (no arg)
      *
      */
     fun route(route: Routes, arg: Any ?= null){

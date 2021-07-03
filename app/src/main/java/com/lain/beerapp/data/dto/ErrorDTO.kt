@@ -14,9 +14,5 @@ data class ErrorDTO (
      */
     var message : String ?= null,
 
-    /**
-     * Route to reconnect
-     */
-    var route: Router.Routes
 
 ) : Serializable

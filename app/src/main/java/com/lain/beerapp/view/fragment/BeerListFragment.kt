@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lain.beerapp.R
+import com.lain.beerapp.data.mapper.ErrorMapper
 import com.lain.beerapp.data.network.errors.HttpErrorResponse
 import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.utils.HandleErrors
@@ -86,15 +86,34 @@ class BeerListFragment : BaseFragment() {
             binding.mainSRL.isRefreshing = false
             handleApiError(error = it, object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-
+                    Router.route(
+                        route = Router.Routes.BEER_LIST_TO_ERROR,
+                        ErrorMapper.map(
+                            message = httpErrorResponse.message
+                        )
+                    )
                 }
 
                 override fun onNetworkError(throwable: Throwable) {
-
+                    Router.route(
+                        route = Router.Routes.BEER_LIST_TO_ERROR,
+                        ErrorMapper.map(
+                            message = (throwable.message ?: kotlin.run {
+                                getString(R.string.error_fragment)
+                            })
+                        )
+                    )
                 }
 
                 override fun unknownApiError(throwable: Throwable) {
-
+                    Router.route(
+                        route = Router.Routes.BEER_LIST_TO_ERROR,
+                        ErrorMapper.map(
+                            message = (throwable.message ?: kotlin.run {
+                                getString(R.string.error_fragment)
+                            })
+                        )
+                    )
                 }
 
             })
@@ -117,8 +136,12 @@ class BeerListFragment : BaseFragment() {
          */
         beerViewModel.findBeers(page = PAGE)
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.title =
-            getString(R.string.app_name)
+        /**
+         * Set title
+         */
+        val title = getString(R.string.app_name)
+        setTitle(title = title)
+
 
         return binding.root
 

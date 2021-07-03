@@ -12,9 +12,8 @@ object ErrorMapper {
     /**
      * Map error to dto.
      */
-    fun map(message: String, route: Router.Routes) : ErrorDTO = ErrorDTO(
-        message = message,
-        route = route
+    fun map(message: String) : ErrorDTO = ErrorDTO(
+        message = message
     )
 
 }

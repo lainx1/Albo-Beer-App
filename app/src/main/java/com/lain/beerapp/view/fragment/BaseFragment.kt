@@ -2,6 +2,7 @@ package com.lain.beerapp.view.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
@@ -66,6 +67,17 @@ open class BaseFragment : Fragment() {
 
         }
 
+
+    }
+
+
+    /**
+     * Set title to toolbar.
+     * @param title the toolbar title.
+     */
+    fun setTitle(title : String){
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = title
 
     }
 

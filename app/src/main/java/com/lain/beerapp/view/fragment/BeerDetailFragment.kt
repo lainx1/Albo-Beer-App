@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.BeerDTO
@@ -19,7 +17,7 @@ import java.util.*
  * This class is the Beer Detail.
  * @author Ivan Martinez Jimenez.
  */
-class BeerDetailFragment : Fragment() {
+class BeerDetailFragment : BaseFragment() {
 
     /**
      * Binding
@@ -45,7 +43,8 @@ class BeerDetailFragment : Fragment() {
         /**
          * Set title
          */
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = beer.name
+        setTitle(title = beer.name!!)
+
 
         /**
          * Build food pairing

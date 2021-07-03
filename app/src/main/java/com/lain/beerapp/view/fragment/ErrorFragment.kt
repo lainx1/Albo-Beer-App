@@ -5,21 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.lain.beerapp.R
 import com.lain.beerapp.data.dto.ErrorDTO
 import com.lain.beerapp.databinding.ErrorBinding
 import com.lain.beerapp.view.Router
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * This class is the default error activity.
  * @author Ivan Martinez Jimenez.
  */
 @AndroidEntryPoint
-class ErrorFragment : Fragment() {
+class ErrorFragment : BaseFragment() {
 
     /**s
      * Binding
@@ -55,20 +52,17 @@ class ErrorFragment : Fragment() {
         _error = arguments?.getSerializable(Router.Extras.ERROR.value) as ErrorDTO
         binding.error = error
 
+        /**
+         * Set title
+         */
+        setTitle(title = getString(R.string.error_fragment_name))
+
+
         return binding.root
     }
 
     override fun onStart() {
-
         super.onStart()
-        binding.reconnectBTN.setOnClickListener {
-
-            Router.route(
-                route = Router.Routes.ERROR_TO_BEER_LIST,
-                requireActivity().findNavController(R.id.nav_host_fragment)
-            )
-
-        }
-
+        binding.reconnectBTN.setOnClickListener { Router.route( route = Router.Routes.ERROR_TO_BEER_LIST) }
     }
 }

@@ -2,8 +2,8 @@
     <string name="app_name">Beer App</string>
 
     <!--ERROR ACTIVITY-->
-    <string name="error_activity">Ha ocurrido un error.</string>
-    <string name="error_activity_name">Error</string>
+    <string name="error_fragment">Ha ocurrido un error.</string>
+    <string name="error_fragment_name">Error</string>
     <string name="reconnect">Reconectar</string>
 
     <!-- DETAIL ACTIVITY -->
