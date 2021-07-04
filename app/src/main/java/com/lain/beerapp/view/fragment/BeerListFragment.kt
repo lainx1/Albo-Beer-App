@@ -13,6 +13,7 @@ import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.utils.HandleErrors
 import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
+import com.lain.beerapp.view.errors.Errors
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -86,29 +87,30 @@ class BeerListFragment : BaseFragment() {
             binding.mainSRL.isRefreshing = false
             handleApiError(error = it, object : HandleErrors {
                 override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-                    Router.route(
-                        route = Router.Routes.BEER_LIST_TO_ERROR,
-                        ErrorMapper.map(
-                            message = httpErrorResponse.message
-                        )
+
+                    Errors.showSnackBarError(
+                        message = httpErrorResponse.message,
+                        view = binding.parentLayout
                     )
+
                 }
 
                 override fun onNetworkError(throwable: Throwable) {
-                    Router.route(
-                        route = Router.Routes.BEER_LIST_TO_ERROR,
-                        ErrorMapper.map(
-                            message = (throwable.message ?: kotlin.run {
-                                getString(R.string.error_fragment)
-                            })
-                        )
+
+                    Errors.showSnackBarError(
+                        message = (throwable.message ?: kotlin.run {
+                            getString(R.string.error_fragment)
+                        }),
+                        view = binding.parentLayout
                     )
+
                 }
 
                 override fun unknownApiError(throwable: Throwable) {
-                    Router.route(
-                        route = Router.Routes.BEER_LIST_TO_ERROR,
-                        ErrorMapper.map(
+
+                    Errors.showErrorView(
+                        errorRoute = Router.Routes.BEER_LIST_TO_ERROR,
+                        error = ErrorMapper.map(
                             message = (throwable.message ?: kotlin.run {
                                 getString(R.string.error_fragment)
                             })
