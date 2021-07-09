@@ -23,6 +23,6 @@ interface PunkApi{
     suspend fun findAll(
         @Query(value = "page")page : Int,
         @Query(value = "per_page") perPage: Int? = 20
-    ): Either<ApiError, List<Beer>>
+    ): List<Beer>
 
 }

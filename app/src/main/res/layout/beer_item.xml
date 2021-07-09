@@ -4,7 +4,7 @@
     <data>
         <variable
             name="beer"
-            type="com.lain.beerapp.data.dto.BeerDTO" />
+            type="com.lain.beerapp.data.network.entity.Beer" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -58,7 +58,7 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:text="@{beer.tagLine}"
+                    android:text="@{beer.tagline}"
                     />
 
             </LinearLayout>

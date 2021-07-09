@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lain.beerapp.R
-import com.lain.beerapp.data.mapper.ErrorMapper
-import com.lain.beerapp.data.network.errors.HttpErrorResponse
+import com.lain.beerapp.data.network.entity.Beer
 import com.lain.beerapp.databinding.BeerListBinding
-import com.lain.beerapp.utils.HandleErrors
-import com.lain.beerapp.view.Router
 import com.lain.beerapp.view.adapters.BeerAdapter
-import com.lain.beerapp.view.errors.Errors
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -26,9 +29,9 @@ import javax.inject.Inject
 class BeerListFragment : BaseFragment() {
 
     /**
-     * Pagination control
+     * Search job
      */
-    private var PAGE = 1
+    private var findAllJob : Job ?= null
 
     /**
      * The base view model [BeerViewModel].
@@ -46,18 +49,7 @@ class BeerListFragment : BaseFragment() {
     /**
      * Beer adapter
      */
-    private val beerAdapter = BeerAdapter(beers = mutableListOf()) { beer ->
-        Router.route(
-
-            route = Router.Routes.BEER_LIST_TO_BEER_DETAIL,
-            /**
-             * Args
-             */
-            beer
-
-        )
-
-    }
+    private val beerAdapter = BeerAdapter { beer: Beer -> }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,70 +65,11 @@ class BeerListFragment : BaseFragment() {
             this.adapter = beerAdapter
         }
 
-        beerViewModel.loading.observe(viewLifecycleOwner, {
-
-            showLoader(loader = binding.loaderContainer.loader, loading = it)
-
-        })
-
-        /**
-         * Observe errors.
-         */
-        beerViewModel.error.observe(viewLifecycleOwner, {
-
-            binding.mainSRL.isRefreshing = false
-            handleApiError(error = it, object : HandleErrors {
-                override fun onHttpError(httpErrorResponse: HttpErrorResponse) {
-
-                    Errors.showSnackBarError(
-                        message = httpErrorResponse.message,
-                        view = binding.parentLayout
-                    )
-
-                }
-
-                override fun onNetworkError(throwable: Throwable) {
-
-                    Errors.showSnackBarError(
-                        message = (throwable.message ?: kotlin.run {
-                            getString(R.string.error_fragment)
-                        }),
-                        view = binding.parentLayout
-                    )
-
-                }
-
-                override fun unknownApiError(throwable: Throwable) {
-
-                    Errors.showErrorView(
-                        errorRoute = Router.Routes.BEER_LIST_TO_ERROR,
-                        error = ErrorMapper.map(
-                            message = (throwable.message ?: kotlin.run {
-                                getString(R.string.error_fragment)
-                            })
-                        )
-                    )
-                }
-
-            })
-
-        })
-
-        /**
-         * Observe beer list
-         */
-        beerViewModel.beers.observe(viewLifecycleOwner, {
-
-            binding.mainSRL.isRefreshing = false
-            beerAdapter.addBeers(beers = it)
-
-
-        })
 
         /**
          * Request first beers
          */
-        beerViewModel.findBeers(page = PAGE)
+        beerViewModel.findBeers()
 
         /**
          * Set title
@@ -144,30 +77,33 @@ class BeerListFragment : BaseFragment() {
         val title = getString(R.string.app_name)
         setTitle(title = title)
 
+        findAllJob()
+        initFindAll()
+
+
 
         return binding.root
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.beerRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    PAGE++
-                    beerViewModel.findBeers(page = PAGE)
-                }
-            }
-        })
+    private fun findAllJob(){
 
-        binding.mainSRL.setOnRefreshListener {
-            if (binding.mainSRL.isRefreshing) {
-                PAGE = 1
-                beerAdapter.clearBeers()
-                beerViewModel.findBeers(page = PAGE)
-            }
+        findAllJob?.cancel()
+        findAllJob = lifecycleScope.launch {
+            beerViewModel.findBeers().collectLatest { beerAdapter.submitData(it) }
         }
+
+    }
+
+    private fun initFindAll(){
+
+        lifecycleScope.launch {
+            beerAdapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.beerRV.scrollToPosition(0) }
+        }
+
     }
 
 }

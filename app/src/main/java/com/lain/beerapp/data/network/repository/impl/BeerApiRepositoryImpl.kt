@@ -13,7 +13,6 @@ import javax.inject.Inject
  */
 class BeerApiRepositoryImpl @Inject constructor(private val punkApi: PunkApi) : BeerApiRepository {
 
-    override suspend fun findAll(page: Int): Either<ApiError, List<Beer>> =
-        punkApi.findAll(page = page)
+    override suspend fun findAll(page: Int): List<Beer> = punkApi.findAll(page = page)
 
 }

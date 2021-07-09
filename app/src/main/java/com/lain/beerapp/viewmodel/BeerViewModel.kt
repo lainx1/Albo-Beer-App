@@ -1,15 +1,12 @@
 package com.lain.beerapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.data.network.errors.ApiError
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.lain.beerapp.data.network.entity.Beer
 import com.lain.beerapp.data.repository.BeerRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -21,55 +18,23 @@ class BeerViewModel @Inject constructor(
     private val beerRepository: BeerRepository
 ) : ViewModel() {
 
-    /**
-     * A live data error.
-     */
-    private val _error = MutableLiveData<ApiError>()
 
-    /**
-     * A live data for loading.
-     */
-    private val _loading = MutableLiveData<Boolean>()
-
-    /**
-     * The response live data.
-     */
-    private val _beers = MutableLiveData<List<BeerDTO>>()
-
-    /**
-     * The entry to error.
-     */
-    val error: LiveData<ApiError> get() = _error
-
-    /**
-     * The entry to loading data.
-     */
-    val loading: LiveData<Boolean> get() = _loading
-
-    /**
-     * The entry to response.
-     */
-    val beers: LiveData<List<BeerDTO>> get() = _beers
+    private var beers : Flow<PagingData<Beer>> ?= null
 
     /**
      * Send a functional get request example.
      */
-    fun findBeers(page: Int) {
-        _loading.value = true
+    fun findBeers() : Flow<PagingData<Beer>> {
+        val lastResult = beers
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val either = beerRepository.findAll(page = page)
+        if(lastResult != null)
+            return lastResult
 
-            withContext(Dispatchers.Main) {
-                _loading.value = false
 
-                either.fold({
-                    _error.value = it
-                }, {
-                    _beers.value = it
-                })
-            }
+        val newResult : Flow<PagingData<Beer>> = beerRepository.findAll().cachedIn(viewModelScope)
 
-        }
+        beers = newResult
+
+        return newResult
     }
 }

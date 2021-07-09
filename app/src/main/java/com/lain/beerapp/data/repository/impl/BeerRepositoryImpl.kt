@@ -1,11 +1,18 @@
 package com.lain.beerapp.data.repository.impl
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import arrow.core.Either
+import com.lain.beerapp.data.BeerDataSource
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.data.network.entity.Beer
 import com.lain.beerapp.data.network.errors.ApiError
 import com.lain.beerapp.data.network.mapper.BeerMapper
 import com.lain.beerapp.data.network.repository.BeerApiRepository
+import com.lain.beerapp.data.network.repository.NETWORK_PAGE_SIZE
 import com.lain.beerapp.data.repository.BeerRepository
+import kotlinx.coroutines.flow.Flow
 import java.util.stream.Collectors
 import javax.inject.Inject
 
@@ -16,13 +23,17 @@ import javax.inject.Inject
 class BeerRepositoryImpl @Inject constructor(
     private val beerApiRepository: BeerApiRepository
 ) : BeerRepository{
-    override suspend fun findAll(page: Int): Either<ApiError, List<BeerDTO>> {
 
-        beerApiRepository.findAll(page = page).fold({
-            return Either.left(it)
-        },{
-            return Either.right(it.stream().map(BeerMapper::map).collect(Collectors.toList()))
-        })
+    override fun findAll(): Flow<PagingData<Beer>> {
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { BeerDataSource(beerApiRepository = beerApiRepository) }
+        ).flow
+
 
     }
 

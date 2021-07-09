@@ -2,10 +2,12 @@ package com.lain.beerapp.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lain.beerapp.R
-import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.data.network.entity.Beer
 import com.lain.beerapp.databinding.BeerItemBinding
 import com.lain.beerapp.utils.Utils
 
@@ -15,21 +17,43 @@ import com.lain.beerapp.utils.Utils
  * @author Ivan Martinez Jimenez.
  */
 class BeerAdapter(
-    private val beers: MutableList<BeerDTO>,
-    private val onClickBeer: (BeerDTO) -> Unit
+    private val onClickBeer: (Beer) -> Unit
 ) :
-    RecyclerView.Adapter<BeerAdapter.BeerViewHolder>() {
+    PagingDataAdapter<Beer, BeerAdapter.BeerViewHolder>(BEER_COMPARATOR) {
+
+    /**
+     * DiffUtil implementation
+     */
+    companion object{
+        private val BEER_COMPARATOR = object : DiffUtil.ItemCallback<Beer>(){
+
+            override fun areItemsTheSame(oldItem: Beer, newItem: Beer): Boolean = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Beer, newItem: Beer): Boolean = oldItem == newItem
+
+        }
+    }
+
     /**
      * View Holder
      */
     class BeerViewHolder(val beerItemBinding: BeerItemBinding) : RecyclerView.ViewHolder(beerItemBinding.root) {
 
         /**
+         * Create ViewHolder
+         */
+        companion object {
+            fun create(parent: ViewGroup): BeerViewHolder = BeerViewHolder(
+                beerItemBinding = BeerItemBinding.bind(LayoutInflater.from(parent.context).inflate(R.layout.beer_item, parent, false))
+            )
+        }
+
+        /**
          * Bind data.
          * @param beer .
          * @param onClickBeer .
          */
-        fun bind(beer: BeerDTO, onClickBeer: (BeerDTO) -> Unit) {
+        fun bind(beer: Beer, onClickBeer: (Beer) -> Unit) {
 
             beerItemBinding.beer = beer
 
@@ -40,7 +64,7 @@ class BeerAdapter(
             parent.setOnClickListener { onClickBeer(beer) }
 
             Glide.with(context)
-                .load(beer.image)
+                .load(beer.imageUrl)
                 .placeholder(Utils.getCircularProgressDrawable(context = context))
                 .into(beerIV)
 
@@ -52,40 +76,12 @@ class BeerAdapter(
     ADAPTER METHODS
     ==============================================================================================*/
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder =
-        BeerViewHolder(
-            beerItemBinding = BeerItemBinding.bind(LayoutInflater.from(parent.context).inflate(R.layout.beer_item, parent, false))
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder = BeerViewHolder.create(parent = parent)
 
     override fun onBindViewHolder(holder: BeerViewHolder, position: Int) {
-        holder.bind(beer = beers[position], onClickBeer = onClickBeer)
-    }
-
-
-    override fun getItemCount(): Int = beers.size
-
-
-    /*==============================================================================================
-    PUBLIC METHODS
-    ==============================================================================================*/
-    /**
-     * Add given beers to adapter.
-     * @param beers beers to add.
-     */
-    fun addBeers(beers: List<BeerDTO>) {
-
-        val start = this.beers.size
-        this.beers.addAll(start, beers)
-        notifyItemRangeInserted(start, beers.size)
-
-    }
-
-    /**
-     * Clear all beers.
-     */
-    fun clearBeers() {
-        this.beers.clear()
-        notifyDataSetChanged()
+        val beer = getItem(position)
+        if(beer != null)
+            holder.bind(beer = beer, onClickBeer = onClickBeer)
     }
 
 }

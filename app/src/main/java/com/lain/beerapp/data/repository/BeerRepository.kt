@@ -1,8 +1,9 @@
 package com.lain.beerapp.data.repository
 
-import arrow.core.Either
+import androidx.paging.PagingData
 import com.lain.beerapp.data.dto.BeerDTO
-import com.lain.beerapp.data.network.errors.ApiError
+import com.lain.beerapp.data.network.entity.Beer
+import kotlinx.coroutines.flow.Flow
 
 /**
  * This class have the beer repository.
@@ -12,9 +13,8 @@ interface BeerRepository {
 
     /**
      * Find all beers.
-     * @param page .
      */
-    suspend fun findAll(page: Int): Either<ApiError, List<BeerDTO>>
+    fun findAll(): Flow<PagingData<Beer>>
 
     /**
      * Save beers.
