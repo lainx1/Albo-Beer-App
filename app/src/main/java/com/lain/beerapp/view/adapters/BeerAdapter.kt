@@ -18,8 +18,7 @@ import com.lain.beerapp.utils.Utils
  */
 class BeerAdapter(
     private val onClickBeer: (Beer) -> Unit
-) :
-    PagingDataAdapter<Beer, BeerAdapter.BeerViewHolder>(BEER_COMPARATOR) {
+) : PagingDataAdapter<Beer, BeerAdapter.BeerViewHolder>(BEER_COMPARATOR) {
 
     /**
      * DiffUtil implementation

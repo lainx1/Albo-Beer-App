@@ -12,5 +12,6 @@
     <string name="detail_activity_first_brewed">First brewed: %1$s</string>
     <string name="detail_activity_description">🍻 %1$s</string>
     <string name="detail_activity_food_pairing_item">"😋 -> %1$s\n"</string>
+    <string name="retry">Retry</string>
 
 </resources>

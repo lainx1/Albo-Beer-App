@@ -11,13 +11,11 @@ import com.lain.beerapp.R
 import com.lain.beerapp.data.network.entity.Beer
 import com.lain.beerapp.databinding.BeerListBinding
 import com.lain.beerapp.view.adapters.BeerAdapter
+import com.lain.beerapp.view.adapters.BeerLoadStateAdapter
 import com.lain.beerapp.viewmodel.BeerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +29,7 @@ class BeerListFragment : BaseFragment() {
     /**
      * Search job
      */
-    private var findAllJob : Job ?= null
+    private var findAllJob: Job? = null
 
     /**
      * The base view model [BeerViewModel].
@@ -65,6 +63,11 @@ class BeerListFragment : BaseFragment() {
             this.adapter = beerAdapter
         }
 
+        binding.beerRV.adapter= beerAdapter.withLoadStateHeaderAndFooter(
+            header = BeerLoadStateAdapter { beerAdapter.retry() },
+            footer = BeerLoadStateAdapter { beerAdapter.retry() }
+        )
+
 
         /**
          * Request first beers
@@ -86,7 +89,7 @@ class BeerListFragment : BaseFragment() {
 
     }
 
-    private fun findAllJob(){
+    private fun findAllJob() {
 
         findAllJob?.cancel()
         findAllJob = lifecycleScope.launch {
@@ -95,7 +98,7 @@ class BeerListFragment : BaseFragment() {
 
     }
 
-    private fun initFindAll(){
+    private fun initFindAll() {
 
         lifecycleScope.launch {
             beerAdapter.loadStateFlow
