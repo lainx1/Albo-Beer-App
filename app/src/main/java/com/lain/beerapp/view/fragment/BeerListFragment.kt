@@ -68,6 +68,10 @@ class BeerListFragment : BaseFragment() {
             footer = BeerLoadStateAdapter { beerAdapter.retry() }
         )
 
+        beerAdapter.addLoadStateListener {
+            showLoader(loader = binding.loaderContainer.loader, loading = (it.refresh is LoadState.Loading && beerAdapter.itemCount == 0))
+        }
+
 
         /**
          * Request first beers
