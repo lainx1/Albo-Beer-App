@@ -1,6 +1,12 @@
 package com.lain.beerapp.data.entity
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "beer_keys")
-data class BeerKeys()
+@Entity(tableName = "remote_keys")
+data class RemoteKeys(
+    @PrimaryKey
+    val repoId: Long,
+    val prevKey: Int?,
+    val nextKey: Int?
+)

@@ -1,5 +1,7 @@
 package com.lain.beerapp.di
 
+import android.content.Context
+import com.lain.beerapp.data.database.BeerDataBase
 import com.lain.beerapp.data.network.converters.EitherCallAdapterFactory
 import com.lain.beerapp.data.network.repository.BeerApiRepository
 import com.lain.beerapp.data.network.repository.impl.BeerApiRepositoryImpl
@@ -14,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -58,8 +61,10 @@ object DiModule {
     @Provides
     fun provideBeerRepository(
         beerApiRepository: BeerApiRepository,
+        @ApplicationContext applicationContext: Context
     ) : BeerRepository = BeerRepositoryImpl(
-        beerApiRepository = beerApiRepository
+        beerApiRepository = beerApiRepository,
+        beerDataBase = BeerDataBase.getInstance(context = applicationContext)
     )
 
     /**

@@ -2,6 +2,7 @@ package com.lain.beerapp.data.repository
 
 import androidx.paging.PagingData
 import com.lain.beerapp.data.dto.BeerDTO
+import com.lain.beerapp.data.entity.BeerEntity
 import com.lain.beerapp.data.network.entity.Beer
 import kotlinx.coroutines.flow.Flow
 
